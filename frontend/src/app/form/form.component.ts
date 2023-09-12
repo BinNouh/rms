@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
-import { FormService } from '../form.service';
+import { FormService } from './form.service';
 import { saveAs } from 'file-saver';
+import { AuthService } from '../authentication/auth.service';
 
 @Component({
   selector: 'app-form-card',
@@ -19,9 +20,21 @@ export class FormComponent implements OnInit {
   private selectedFiles: Map<string, File> = new Map();
 
 
-  constructor(private fb: FormBuilder, private formService: FormService) {}
+  constructor(private fb: FormBuilder, private formService: FormService, private authService: AuthService) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
+    // Checking if the user is logged in
+    const loggedIn = await this.authService.isLoggedIn();
+
+    if (loggedIn) {
+      // Do something specific for logged-in users
+      console.log('User is logged in.');
+      // Note: You can add more functionality here depending on what you want to do for logged-in users.
+    } else {
+      console.log('User is not logged in.');
+    }
+    
     this.form = this.fb.group({
       personalInfo: this.createPersonalInfoFormGroup(),
       addressInfo: this.createAddressInfoFormGroup(),
@@ -207,8 +220,4 @@ export class FormComponent implements OnInit {
     );
   }
 }
-
-
 }
-
-

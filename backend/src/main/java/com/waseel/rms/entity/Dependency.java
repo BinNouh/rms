@@ -25,7 +25,7 @@ public class Dependency {
     private Date dateOfBirth;
 
     @ManyToOne
-    @JoinColumn(name = "applicant")
+    @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 
     // Constructors, getters, setters, etc.

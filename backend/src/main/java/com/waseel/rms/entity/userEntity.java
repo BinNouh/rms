@@ -13,12 +13,10 @@ public class userEntity {
     // Keycloak Identifier for User
     private String keycloakId;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "applicant_id")
+    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
     private Applicant applicant;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "recruiter_id")
+    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
     private Recruiter recruiter;
 
 

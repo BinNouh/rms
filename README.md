@@ -5,8 +5,8 @@ This project consists of a frontend built with Angular, a backend built with Spr
 ### Prerequisites
 
 - Java 17
-- Node.js
-- Angular CLI
+- Spring Boot 3.0
+- Angular 16.2
 - Docker (if you want to containerize the Spring Boot app)
 
 ### Running the Project
@@ -46,11 +46,21 @@ Navigate to frontend directory and run:
 
 ### 4. Using Docker (Optional)     ((NOT YET INITIATED))
 
-`cd backend`
+#### Make sure you are in docker-compose.yml file dir, then run this command:
 
-`docker build -t my-backend-app`
-
-`docker run -p 8081:8081 my-backend-app`
+`docker-compose up -d`
 
 #### Now, visit the application at http://localhost:4200
+
+
+### Project Describition:
+
+
+
+### Project Structure:
+
+
+
+### Project Flow:
+
 

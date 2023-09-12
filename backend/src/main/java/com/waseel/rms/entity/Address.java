@@ -37,8 +37,8 @@ public class Address {
     @NotBlank(message = "Email address is required.")
     private String emailAddress;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "applicant")
+    @OneToOne
+    @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 
     // Constructors, getters, setters, etc.

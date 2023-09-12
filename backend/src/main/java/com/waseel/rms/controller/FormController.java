@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,9 +21,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+// @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("api/form")
+@RequestMapping("/applicant/form")
 public class FormController {
 
     @Autowired
@@ -46,8 +47,9 @@ public class FormController {
     @Autowired
     private NationalIdentityRepository nationalIdentityRepository;
 
+//    @Transactional
+    @PreAuthorize("hasRole('applicant-spring')")
     @PostMapping("/submit")
-    @Transactional
     public ResponseEntity<String> submitForm(
             @RequestParam("applicant") @Valid String applicantJson,
             @RequestParam("address") @Valid String addressJson,

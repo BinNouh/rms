@@ -21,8 +21,8 @@ public class Attachment {
 
     private String attachmentType;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "applicant")
+    @ManyToOne
+    @JoinColumn(name="applicant_id")
     private Applicant applicant;
 
     // Constructors, getters, setters, etc.

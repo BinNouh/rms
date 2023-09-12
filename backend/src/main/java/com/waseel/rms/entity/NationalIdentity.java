@@ -30,7 +30,7 @@ public class NationalIdentity {
     private String placeOfBirth;
 
     @OneToOne
-    @JoinColumn(name = "applicant")
+    @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 
     // Constructors, getters, setters, etc.

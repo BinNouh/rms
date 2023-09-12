@@ -24,7 +24,7 @@ public class EmergencyContact {
     private Long phoneNumber;
 
     @ManyToOne
-    @JoinColumn(name = "applicant")
+    @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 
     // Constructors, getters, setters, etc.

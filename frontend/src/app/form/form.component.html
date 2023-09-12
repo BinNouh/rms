@@ -145,13 +145,14 @@
       />
     </div>
 
-    <div class="container" *ngIf="!formSubmitted">
+    <div class="container" *ngIf="form">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <!-- Personal Information Card -->
         <div class="card">
           <h2>Personal Information</h2>
 
-          <div class="form-group" formGroupName="personalInfo">
+          <div formGroupName="personalInfo">
+          <div class="form-group">
             <label for="fullName">Full Name:</label>
             <input type="text" id="fullName" formControlName="fullName" />
             <div *ngIf="form.get('personalInfo.fullName')?.invalid && formSubmitted">
@@ -160,7 +161,7 @@
             </div>            
           </div>
     
-          <div class="form-group" formGroupName="personalInfo">
+          <div class="form-group">
             <label for="nationality">Nationality:</label>
             <input type="text" id="nationality" formControlName="nationality" />
             <div *ngIf="form.get('personalInfo.nationality')?.invalid && formSubmitted">
@@ -169,14 +170,14 @@
             </div>
           </div>
           
-          <div class="form-group" formGroupName="personalInfo">
+          <div class="form-group">
             <label for="gender">Gender:</label>
             <select id="gender" formControlName="gender" required>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
           </div>
-          <div class="form-group" formGroupName="personalInfo">
+          <div class="form-group">
             <label for="bloodType">Blood Type:</label>
             <select id="bloodType" formControlName="bloodType" required>
               <option value="A_POSITIVE">A+</option>
@@ -189,7 +190,7 @@
               <option value="O_NEGATIVE">O-</option>
             </select>
           </div>
-          <div class="form-group" formGroupName="personalInfo">
+          <div class="form-group">
             <label for="martialStatus">Marital Status:</label>
             <select
               id="martialStatus"
@@ -201,20 +202,22 @@
               <option value="Married">Married</option>
             </select>
           </div>
-          <!-- <div class="form-group" formGroupName="personalInfo">
+          <!-- <div class="form-group">
             <label for="experienceLetters">Do you have work experience?</label>
             <select id="experienceLetters" formControlName="experienceLetters" required>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
           </div> -->
+          </div>
         </div>
 
         <!-- Address Information Card -->
         <div class="card">
           <h2>Address Information</h2>
 
-          <div class="form-group" formGroupName="addressInfo">
+          <div formGroupName="addressInfo">
+          <div class="form-group">
             <label for="addressLine">Address Line:</label>
             <input
               type="text"
@@ -223,7 +226,7 @@
               required
             />
           </div>
-          <div class="form-group" formGroupName="addressInfo">
+          <div class="form-group">
             <label for="country">Country:</label>
             <input
               type="text"
@@ -232,11 +235,11 @@
               required
             />
           </div>
-          <div class="form-group" formGroupName="addressInfo">
+          <div class="form-group">
             <label for="city">City:</label>
             <input type="text" id="city" formControlName="city" required />
           </div>
-          <div class="form-group" formGroupName="addressInfo">
+          <div class="form-group">
             <label for="zipCode">Zip Code:</label>
             <input
               type="text"
@@ -245,7 +248,7 @@
               required
             />
           </div>
-          <div class="form-group" formGroupName="addressInfo">
+          <div class="form-group">
             <label for="additionalCode">Additional Code (Optional):</label>
             <input
               type="text"
@@ -254,7 +257,7 @@
               required
             />
           </div>
-          <div class="form-group" formGroupName="addressInfo">
+          <div class="form-group">
             <label for="mobileNumber">Mobile Number:</label>
             <input
               type="text"
@@ -263,7 +266,7 @@
               required
             />
           </div>
-          <div class="form-group" formGroupName="addressInfo">
+          <div class="form-group">
             <label for="emailAddress">Email:</label>
             <input
               type="email"
@@ -272,13 +275,15 @@
               required
             />
           </div>
+          </div>
         </div>
 
         <!-- National Identity Card -->
         <div class="card">
           <h2>National Identity</h2>
 
-          <div class="form-group" formGroupName="nationalIdentity">
+          <div formGroupName="nationalIdentity">
+          <div class="form-group">
             <label for="idNumber">ID Number:</label>
             <input
               type="text"
@@ -287,7 +292,7 @@
               required
             />
           </div>
-          <div class="form-group" formGroupName="nationalIdentity">
+          <div class="form-group">
             <label for="expiryDate">Expiry Date:</label>
             <input
               type="date"
@@ -296,7 +301,7 @@
               required
             />
           </div>
-          <div class="form-group" formGroupName="nationalIdentity">
+          <div class="form-group">
             <label for="placeOfIssue">Place of Issue:</label>
             <input
               type="text"
@@ -305,7 +310,7 @@
               required
             />
           </div>
-          <div class="form-group" formGroupName="nationalIdentity">
+          <div class="form-group">
             <label for="dateOfBirth">Date of Birth:</label>
             <input
               type="date"
@@ -314,7 +319,7 @@
               required
             />
           </div>
-          <div class="form-group" formGroupName="nationalIdentity">
+          <div class="form-group">
             <label for="placeOfBirth">Place of Birth:</label>
             <input
               type="text"
@@ -322,6 +327,7 @@
               formControlName="placeOfBirth"
               required
             />
+          </div>
           </div>
         </div>
 

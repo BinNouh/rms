@@ -14,7 +14,9 @@ public class Recruiter {
     // Keycloak Identifier for Recruiter
     private String keycloakId;
 
-    @OneToOne(mappedBy = "recruiter")
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private userEntity user;
 
     // Constructors

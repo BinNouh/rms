@@ -5,11 +5,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -27,13 +32,16 @@ public class WebSecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-//                .requestMatchers("/api/admin/**").hasRole("admin") // New Line: Admin-only endpoints
-//                .requestMatchers("/api/recruiter/**").hasRole("recruiter-main") // New Line: Recruiter-only endpoints
-//                .requestMatchers("/api/form/**").hasRole("applicant-main") // New Line: Applicant-only endpoints
-                .requestMatchers("api/form/**")
-                .permitAll() // Allow any request to be accessed
+                .requestMatchers("/admin/**").hasRole("admin") // New Line: Admin-only endpoints
+                .requestMatchers("/recruiter/**").hasRole("recruiter-main") // New Line: Recruiter-only endpoints
+                .requestMatchers("/applicant/**").hasRole("applicant-main") // New Line: Applicant-only endpoints
+//                .requestMatchers("/**")
+//                .permitAll() // Allow any request to be accessed
                 .anyRequest()
                 .authenticated(); // Modified Line: Any other request just needs authentication
+
+        http.authorizeRequests()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 
         http
                 .oauth2ResourceServer()
@@ -44,40 +52,19 @@ public class WebSecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(STATELESS);
 
-        return http.build();
-    }
+        // Enable CORS
+        http.cors().configurationSource(request -> {
+            CorsConfiguration config = new CorsConfiguration();
+            config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+            config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
+            config.setAllowCredentials(true);
+            config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+
+            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+            source.registerCorsConfiguration("/**", config);
+            return config;
+    });
+    return http.build();
 }
 
-
-//        @Value("${spring.security.oauth2.resourceserver.opaquetoken.introspection-uri}")
-//        private String introspectionUri;
-//        @Value("${keycloak.resource}")
-//        private String clientId;
-//        @Value("${keycloak.credentials.secret}")
-//        private String clientSecret;
-
-
-//        @Bean
-//        public SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
-//
-//            httpSecurity.cors()
-//                    .disable()
-//                    .csrf()
-//                    .disable()
-//                    .authorizeHttpRequests()
-//                    .requestMatchers("/api/applicant/**")
-//                    .authenticated()
-//                    .anyRequest()
-//                    .permitAll()
-//                    .and()
-//                    .exceptionHandling()
-//                    .and()
-//                    .sessionManagement()
-//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-////            httpSecurity.oauth2ResourceServer()
-////                    .opaqueToken();
-////                    .introspectionUri(introspectionUri)
-////                    .introspectionClientCredentials(clientId, clientSecret);
-//            return httpSecurity.build();
-//        }
-//    }
+}

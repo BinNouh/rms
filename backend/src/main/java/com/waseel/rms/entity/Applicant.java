@@ -40,23 +40,24 @@ public class Applicant {
 
     private String submissionStatus;
 
-    @OneToMany(mappedBy = "applicant")
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
     private List<Dependency> dependencies;
-
-    @OneToMany(mappedBy = "applicant")
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
     private List<EmergencyContact> emergencyContacts;
 
-    @OneToMany(mappedBy = "applicant")
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
     private List<Attachment> attachments;
 
-    @OneToOne(mappedBy = "applicant")
+    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
     private Address address;
 
-    @OneToOne(mappedBy = "applicant")
+    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
     private NationalIdentity nationalIdentity;
 
-    @OneToOne(mappedBy = "applicant")
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private userEntity user;
+
     // Constructors, getters, setters, etc.
 
     public Applicant() {}

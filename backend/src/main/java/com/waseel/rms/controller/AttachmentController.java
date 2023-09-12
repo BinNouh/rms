@@ -20,7 +20,7 @@ import static java.nio.file.Files.copy;
 import static java.nio.file.Paths.get;
 
 @RestController
-@RequestMapping("/api/attachments")
+@RequestMapping("/applicant/attachments")
 public class AttachmentController {
 
 //    public static final String DIRECTORY = System.getProperty("user.home") + "attachments/";
