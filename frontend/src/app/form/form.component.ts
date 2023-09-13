@@ -210,8 +210,8 @@ export class FormComponent implements OnInit {
 
     // Send the form data
     this.formService.submitForm(formData).subscribe(
-      (response) => {
-        console.log('Form submitted successfully', response);
+      (response: any) => {
+        console.log(response.message); // Access the message property of the response object
         this.formSubmitted = true;
       },
       (error) => {

@@ -1,6 +1,6 @@
 #FileLock
-#Tue Sep 12 04:15:28 AST 2023
-server=192.168.101.93\:51708
+#Wed Sep 13 14:14:10 AST 2023
+server=172.26.2.206\:62505
 hostName=PF41TVA6-BINNOUHAB.waseel.local
 method=file
-id=18a86f527e16925f326672af4c6288cb908d08b60bd
+id=18a8e3fa4ed1aa139feeaeb7351fa41cf0d26c8714d

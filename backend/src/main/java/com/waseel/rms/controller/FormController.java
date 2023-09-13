@@ -13,7 +13,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,7 +22,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-// @CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/applicant/form")
 public class FormController {
@@ -47,10 +48,10 @@ public class FormController {
     @Autowired
     private NationalIdentityRepository nationalIdentityRepository;
 
-//    @Transactional
+    @Transactional
     @PreAuthorize("hasRole('applicant-spring')")
     @PostMapping("/submit")
-    public ResponseEntity<String> submitForm(
+    public ResponseEntity<Map<String, String>> submitForm(
             @RequestParam("applicant") @Valid String applicantJson,
             @RequestParam("address") @Valid String addressJson,
             @RequestParam("emergencyContacts") @Valid String emergencyContactsJson,
@@ -111,9 +112,14 @@ public class FormController {
             dependencyRepository.saveAll(dependencies);
             nationalIdentityRepository.save(nationalIdentity);
 
-            return new ResponseEntity<>("Form submitted successfully", HttpStatus.CREATED);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Form submitted successfully");
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
         } catch (Exception e) {
-            return new ResponseEntity<>("Error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Error occurred: " + e.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

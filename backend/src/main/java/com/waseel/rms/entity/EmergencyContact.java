@@ -1,9 +1,7 @@
 package com.waseel.rms.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 
 @Getter
@@ -20,8 +18,10 @@ public class EmergencyContact {
     private String kinship;
 
     @NotNull(message = "Phone number is required.")
-    @Size(min = 10, max = 13, message = "Mobile number must be at least 10 digits.")
+    @Min(value = 100000000L, message = "Phone number must be at least 10 digits.")
+    @Max(value = 9999999999999L, message = "Phone number can be at most 13 digits.")
     private Long phoneNumber;
+
 
     @ManyToOne
     @JoinColumn(name = "applicant_id")

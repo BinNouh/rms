@@ -22,7 +22,8 @@ public class Address {
     private String city;
 
     @NotNull(message = "Zip code is required.")
-    @Size(min = 5, max = 10, message = "Zip code must be at least 5 digits.")
+    @Min(value = 10000, message = "Zip code must be at least 5 digits.")
+    @Max(value = 999999, message = "Zip code can be at most 6 digits.")
     private Integer zipCode;
 
     @NotNull(message = "Additional code is required.")
@@ -30,14 +31,15 @@ public class Address {
     private Integer additionalCode;
 
     @NotNull(message = "Mobile number is required.")
-    @Size(min = 10, max = 13, message = "Mobile number must be at least 10 digits.")
+    @Min(value = 100000000L, message = "Mobile number must be at least 10 digits.")
+    @Max(value = 9999999999999L, message = "Mobile number must be at most 13 digits.")
     private Long mobileNumber;
 
     @Email(message = "Email address is invalid.")
     @NotBlank(message = "Email address is required.")
     private String emailAddress;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 

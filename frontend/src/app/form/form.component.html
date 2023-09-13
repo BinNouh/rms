@@ -146,7 +146,7 @@
     </div>
 
     <div class="container" *ngIf="form">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
         <!-- Personal Information Card -->
         <div class="card">
           <h2>Personal Information</h2>

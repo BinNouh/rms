@@ -33,15 +33,12 @@ public class WebSecurityConfig {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/admin/**").hasRole("admin") // New Line: Admin-only endpoints
-                .requestMatchers("/recruiter/**").hasRole("recruiter-main") // New Line: Recruiter-only endpoints
-                .requestMatchers("/applicant/**").hasRole("applicant-main") // New Line: Applicant-only endpoints
+                .requestMatchers("/recruiter/**").hasRole("recruiter-spring") // New Line: Recruiter-only endpoints
+                .requestMatchers("/applicant/**").hasRole("applicant-spring") // New Line: Applicant-only endpoints
 //                .requestMatchers("/**")
 //                .permitAll() // Allow any request to be accessed
                 .anyRequest()
                 .authenticated(); // Modified Line: Any other request just needs authentication
-
-        http.authorizeRequests()
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll();
 
         http
                 .oauth2ResourceServer()
