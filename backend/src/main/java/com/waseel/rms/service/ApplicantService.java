@@ -65,20 +65,14 @@ public class ApplicantService {
                 });
     }
 
-    public List<Applicant> filterApplicants(String submissionStatus, String gender) {
-        if (submissionStatus != null && gender != null) {
-            return applicantRepository.findBySubmissionStatusAndGender(submissionStatus, gender);
-        } else if (submissionStatus != null) {
-            return applicantRepository.findBySubmissionStatus(submissionStatus);
-        } else if (gender != null) {
-            return applicantRepository.findByGender(gender);
-        } else {
-            return applicantRepository.findAll();
-        }
-    }
     public List<Applicant> getApplicantsBySubmissionStatus(String submissionStatus) {
         return applicantRepository.findBySubmissionStatus(submissionStatus);
     }
+
+    public List<Applicant> getApplicantsByGender(String gender) {
+        return applicantRepository.findByGender(gender);
+    }
+
 }
 
 

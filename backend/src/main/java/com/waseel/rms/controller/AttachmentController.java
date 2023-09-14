@@ -20,7 +20,7 @@ import static java.nio.file.Files.copy;
 import static java.nio.file.Paths.get;
 
 @RestController
-@RequestMapping("/applicant/attachments")
+@RequestMapping("/dashboard/attachments")
 public class AttachmentController {
 
     @Autowired

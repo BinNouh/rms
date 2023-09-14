@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/applicant/emergency-contacts")
+@RequestMapping("/dashboard/emergency-contacts")
 public class EmergencyContactController {
 
 

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/applicant/national-identities")
+@RequestMapping("/dashboard/national-identities")
 public class NationalIdentityController {
 
     @Autowired

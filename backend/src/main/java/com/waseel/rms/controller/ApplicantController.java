@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/applicant")
+@RequestMapping("/dashboard")
 public class ApplicantController {
 
     @Autowired
@@ -40,7 +40,25 @@ public class ApplicantController {
 
     // Filtering by submission status
     @GetMapping("/filter-by-status")
-    public List<Applicant> filterApplicantsBySubmissionStatus(@RequestParam String status) {
-        return applicantService.getApplicantsBySubmissionStatus(status);
+    public ResponseEntity<List<Applicant>> filterApplicantsBySubmissionStatus(@RequestParam String status) {
+        List<Applicant> applicants = applicantService.getApplicantsBySubmissionStatus(status);
+        return ResponseEntity.ok(applicants);
+    }
+
+    // Filtering by gender
+    @GetMapping("/filter-by-gender")
+    public ResponseEntity<List<Applicant>> filterApplicantsByGender(@RequestParam String gender) {
+        List<Applicant> applicants = applicantService.getApplicantsByGender(gender);
+        return ResponseEntity.ok(applicants);
+    }
+
+    // Update applicant status (Under Review (default after submission), Reviewed, Rejected)
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Applicant> updateStatus(@PathVariable Long id, @RequestParam String status) {
+        Applicant updatedApplicant = applicantService.updateSubmissionStatus(id, status);
+        if (updatedApplicant != null) {
+            return ResponseEntity.ok(updatedApplicant);
+        }
+        return ResponseEntity.notFound().build();
     }
 }
