@@ -23,8 +23,6 @@ import static java.nio.file.Paths.get;
 @RequestMapping("/applicant/attachments")
 public class AttachmentController {
 
-//    public static final String DIRECTORY = System.getProperty("user.home") + "attachments/";
-
     @Autowired
     private AttachmentService attachmentService;
 
@@ -47,7 +45,7 @@ public class AttachmentController {
 
     @GetMapping("/byApplicant/{applicantId}")
     public ResponseEntity<List<Attachment>> getAttachmentsByApplicantId(@PathVariable Long applicantId) {
-        Optional<Applicant> applicantOptional = applicantService.findApplicantById(applicantId);
+        Optional<Applicant> applicantOptional = applicantService.getApplicantById(applicantId);
         if (applicantOptional.isPresent()) {
             Applicant applicant = applicantOptional.get();
             List<Attachment> attachments = attachmentService.findAttachmentsByApplicant(applicant);

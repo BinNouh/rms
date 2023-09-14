@@ -19,7 +19,7 @@ public class Attachment {
     // Path attribute for the file system storage
     private String filePath;
 
-    private String attachmentType;
+//    private String attachmentType;
 
     @ManyToOne
     @JoinColumn(name="applicant_id")
@@ -48,9 +48,10 @@ public class Attachment {
         this.fileSize = fileSize;
     }
 
-    public void setAttachmentType(String attachmentType) {
-        this.attachmentType = attachmentType;
-    }
+    // suppose to be determinant of which attachment is (CV, Certificates, etc ...)
+//    public void setAttachmentType(String attachmentType) {
+//        this.attachmentType = attachmentType;
+//    }
 
     public void setApplicant(Applicant applicant) {
         this.applicant = applicant;

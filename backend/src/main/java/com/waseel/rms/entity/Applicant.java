@@ -18,8 +18,6 @@ public class Applicant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long applicant_id;
 
-    // Keycloak Identifier for Applicant
-    private String keycloakId;
 
     @NotBlank(message = "Full name is required.")
     private String fullName;
@@ -38,7 +36,8 @@ public class Applicant {
 
     private ZonedDateTime submissionDate;
 
-    private String submissionStatus;
+    // Default value for submitted forms "Under Review"
+    private String submissionStatus = "Under Review";
 
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
     private List<Dependency> dependencies;
@@ -53,10 +52,6 @@ public class Applicant {
 
     @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
     private NationalIdentity nationalIdentity;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private userEntity user;
 
     // Constructors, getters, setters, etc.
 
@@ -86,6 +81,10 @@ public class Applicant {
         this.submissionDate = submissionDate;
     }
 
+    @PrePersist
+    public void onPrePersist() {
+        this.submissionDate = ZonedDateTime.now();
+    }
     public void setSubmissionStatus(String submissionStatus) {
         this.submissionStatus = submissionStatus;
     }
@@ -94,10 +93,6 @@ public class Applicant {
         this.dependencies = dependencies;
     }
 
-    // Additional methods for setting keycloakId
-    public void setKeycloakId(String keycloakId) {
-        this.keycloakId = keycloakId;
-    }
     public void setEmergencyContacts(List<EmergencyContact> emergencyContacts) {
         this.emergencyContacts = emergencyContacts;
     }
@@ -121,7 +116,5 @@ public class Applicant {
     public String getNationality() { // add this method
         return nationality;
     }
-    public void setUser(userEntity user) {
-        this.user = user;
-    }
+
 }
