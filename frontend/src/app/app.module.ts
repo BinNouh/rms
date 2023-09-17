@@ -13,8 +13,10 @@ import { ApplicantLoginComponent } from './applicant-login/applicant-login.compo
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RecruiterLoginComponent } from './recruiter-login/recruiter-login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { KeycloakAngularModule } from 'keycloak-angular'
-import { KeycloakService } from 'keycloak-angular'
+import { KeycloakAngularModule } from 'keycloak-angular';
+import { KeycloakService } from 'keycloak-angular';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const keycloakService: KeycloakService = new KeycloakService();
 
@@ -44,6 +46,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
     NotFoundComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
+    MatSnackBarModule,
     KeycloakAngularModule,
     BrowserModule,
     AppRoutingModule,

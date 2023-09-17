@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 import { FormService } from './form.service';
 import { saveAs } from 'file-saver';
 import { AuthService } from '../authentication/auth.service';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-form-card',
@@ -11,6 +13,7 @@ import { AuthService } from '../authentication/auth.service';
   styleUrls: ['./form.component.css'],
 })
 export class FormComponent implements OnInit {
+  
   filenames: string[] = [];
   fileStatus = { status: '', requestType: '', percent: 0 };
   public form!: FormGroup;
@@ -20,7 +23,7 @@ export class FormComponent implements OnInit {
   private selectedFiles: Map<string, File> = new Map();
 
 
-  constructor(private fb: FormBuilder, private formService: FormService, private authService: AuthService) {}
+  constructor(private fb: FormBuilder, private formService: FormService, private authService: AuthService, private _snackBar: MatSnackBar) {}
 
   async ngOnInit(): Promise<void> {
 
@@ -193,6 +196,7 @@ export class FormComponent implements OnInit {
 
  // Function to submit the form
  onSubmit() {
+
   if (this.form) {
     const formData = new FormData();
     
@@ -213,11 +217,21 @@ this.formService.submitForm(formData).subscribe(
    (response: any) => {
      console.log(response.message); // Access the message property of the response object
      this.formSubmitted = true;
+     this.openSnackBar("Success");
    },
    (error) => {
      console.log('An error occurred', error);
+     this.openSnackBar("Error!");
+
    }
  );
   }
 }
+openSnackBar(message: string) {
+  this._snackBar.open(message, "", {
+    duration: 2000,
+    panelClass: ['style-msg']
+  });
+}
+
 }

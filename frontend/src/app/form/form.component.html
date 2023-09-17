@@ -21,15 +21,6 @@
         color: #333;
       }
 
-      .container {
-        background-color: #ffffff;
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 40px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-      }
-
       .error {
         color: red;
       }
@@ -83,14 +74,6 @@
         color: white;
       }
 
-      .card {
-        padding: 24px;
-        border: 1px solid #1f2993; /* Hex color added */
-        border-radius: 8px;
-        margin-bottom: 20px;
-        background-color: #f0f2f8;
-      }
-
       h2 {
         font-size: 1.8em;
         margin-bottom: 16px;
@@ -101,6 +84,7 @@
         background-color: #1f2993; /* Hex color added */
         color: #fff;
         padding: 12px 24px;
+        margin: 0px 0px 0px 10px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
@@ -115,25 +99,15 @@
 
       .flex-button-container {
         display: flex;
-        gap: 20px; /* This will add space between the buttons */
-        margin-top: 20px; /* Optional: add some top margin */
+        justify-content: flex-end;        /*gap: 20px; /* This will add space between the buttons */
+        margin: 20px 20px;
+        padding: 0px 25px; /* Optional: add some top margin */
       }
 
       .material-icons {
         margin-right: 8px;
       }
-
-      /* New CSS */
-      .logo-container {
-        position: fixed; /* Fixed position */
-        top: 0; /* Place at the top */
-        left: 0; /* Place at the left */
-        z-index: 1; /* Make sure it appears above other elements */
-      }
-      .logo {
-        width: 200px; /* Set width */
-        height: auto; /* Keep aspect ratio */
-      }
+      
     </style>
   </head>
   <body>
@@ -144,7 +118,6 @@
         class="logo"
       />
     </div>
-
     <div class="container" *ngIf="form">
       <form [formGroup]="form" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
         <!-- Personal Information Card -->
@@ -365,12 +338,15 @@
                   <button type="button" (click)="removeDependent(i)">
                     Remove
                   </button>
+                  <button type="button" (click)="addDependent()">
+                    Add More
+                  </button>
                 </div>
               </div>
             </div>
-            <div class="flex-button-container">
+            <!-- <div class="flex-button-container">
               <button type="button" (click)="addDependent()">Add More</button>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -407,14 +383,17 @@
                   <button type="button" (click)="removeEmergencyContact(i)">
                     Remove
                   </button>
+                  <button type="button" (click)="addEmergencyContact()">
+                    Add More
+                  </button>
                 </div>
               </div>
             </div>
-            <div class="flex-button-container">
+            <!-- <div class="flex-button-container">
               <button type="button" (click)="addEmergencyContact()">
                 Add More
               </button>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -549,12 +528,13 @@
               formControlName="recognitionAcknowledged"
             />
           </div>
+          <div style="display: flex; justify-content: end;">
           <button
             type="submit"
             [disabled]="!(form.get('recognitionAcknowledged')?.value ?? false)"
           >
             Submit
-          </button>
+          </button></div>
         </div>
       </form>
     </div>
