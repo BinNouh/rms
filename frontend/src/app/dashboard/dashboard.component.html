@@ -1,1 +1,108 @@
-<p>dashboard works!</p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.component.css">
+</head>
+
+<body>
+
+    <!-- Left Sidebar Menu -->
+    <aside class="sidebar">
+
+        <!-- Logo Section -->
+        <div class="logo-section">
+            <img src="https://waseel.s3.amazonaws.com/Waseel+New+logo.png" alt="Waseel Logo" class="logo" />
+        </div>
+        
+        <!-- Navigation Links -->
+        <!-- <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Support</a></li>
+        </ul> -->
+
+        <!-- Add the following section at the end of the sidebar -->
+        <div class="sidebar-footer">
+            <span class="user-info">
+                <img src="https://waseel.s3.amazonaws.com/UserIcon.png" alt="User Avatar" class="user-avatar">
+                {{ username }}
+            </span>
+            <button (click)="logout()">Logout</button>
+        </div>
+        
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Filter section -->
+        <div class="filters">
+            <label>
+                Filter by Gender:
+                <select (change)="filterApplicantsByGender($event)">
+                    <option value="">All</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <!-- Add other genders if needed -->
+                </select>
+            </label>
+
+            <label>
+                Filter by Status:
+                <select (change)="filterApplicantsByStatus($event)">
+                    <option value="">All</option>
+                    <option value="Under Review">Under Review</option>
+                    <option value="Reviewed">Reviewed</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </label>
+        </div>
+
+        <!-- Applicants table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th> <!-- Added this line -->
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Status</th>
+                    <th>Submission Date</th> <!-- Added Submission Date column -->
+                    <!-- Add other relevant columns -->
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let applicant of applicants">
+                    <td>{{ applicant.id }}</td> <!-- Added this line -->
+                    <td>{{ applicant.fullName }}</td>
+                    <td>{{ applicant.gender }}</td>
+                    <td>{{ applicant.submissionStatus }}</td>
+                    <td>{{ applicant.submissionDate | date }}</td> <!-- Display Submission Date -->
+                    
+                    <!-- Render other applicant details -->
+                    <td>
+                        <button (click)="deleteApplicant(applicant.id)">Delete</button>
+  
+                        <!-- Dropdown for updating status -->
+                        <label>
+                            Update Status:
+                            <select (change)="updateApplicantStatus(applicant.id, $event)">
+                                <option [selected]="applicant.submissionStatus === 'Under Review'" value="Under Review">Under Review</option>
+                                <option [selected]="applicant.submissionStatus === 'Reviewed'" value="Reviewed">Reviewed</option>
+                                <option [selected]="applicant.submissionStatus === 'Rejected'" value="Rejected">Rejected</option>
+                            </select>
+                        </label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </main>
+</body>
+
+</html>

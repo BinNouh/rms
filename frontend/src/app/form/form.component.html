@@ -107,6 +107,11 @@
       .material-icons {
         margin-right: 8px;
       }
+
+      .required {
+        color: red;
+      }
+
       
     </style>
   </head>
@@ -126,7 +131,7 @@
 
           <div formGroupName="personalInfo">
           <div class="form-group">
-            <label for="fullName">Full Name:</label>
+            <label for="fullName">Full Name:<span class="required"> *</span></label>
             <input type="text" id="fullName" formControlName="fullName" />
             <div *ngIf="form.get('personalInfo.fullName')?.invalid && formSubmitted">
               <small *ngIf="form.get('personalInfo.fullName')?.errors?.['required']">This field is required.</small>
@@ -135,7 +140,7 @@
           </div>
     
           <div class="form-group">
-            <label for="nationality">Nationality:</label>
+            <label for="nationality">Nationality:<span class="required"> *</span></label>
             <input type="text" id="nationality" formControlName="nationality" />
             <div *ngIf="form.get('personalInfo.nationality')?.invalid && formSubmitted">
               <small *ngIf="form.get('personalInfo.nationality')?.errors?.['required']">This field is required.</small>
@@ -144,14 +149,14 @@
           </div>
           
           <div class="form-group">
-            <label for="gender">Gender:</label>
+            <label for="gender">Gender:<span class="required"> *</span></label>
             <select id="gender" formControlName="gender" required>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="bloodType">Blood Type:</label>
+            <label for="bloodType">Blood Type:<span class="required"> *</span></label>
             <select id="bloodType" formControlName="bloodType" required>
               <option value="A_POSITIVE">A+</option>
               <option value="A_NEGATIVE">A-</option>
@@ -164,7 +169,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="martialStatus">Marital Status:</label>
+            <label for="martialStatus">Marital Status:<span class="required"> *</span></label>
             <select
               id="martialStatus"
               name="martialStatus"
@@ -191,7 +196,7 @@
 
           <div formGroupName="addressInfo">
           <div class="form-group">
-            <label for="addressLine">Address Line:</label>
+            <label for="addressLine">Address Line:<span class="required"> *</span></label>
             <input
               type="text"
               id="addressLine"
@@ -200,7 +205,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="country">Country:</label>
+            <label for="country">Country:<span class="required"> *</span></label>
             <input
               type="text"
               id="country"
@@ -209,11 +214,11 @@
             />
           </div>
           <div class="form-group">
-            <label for="city">City:</label>
+            <label for="city">City:<span class="required"> *</span></label>
             <input type="text" id="city" formControlName="city" required />
           </div>
           <div class="form-group">
-            <label for="zipCode">Zip Code:</label>
+            <label for="zipCode">Zip Code:<span class="required"> *</span></label>
             <input
               type="text"
               id="zipCode"
@@ -222,7 +227,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="additionalCode">Additional Code (Optional):</label>
+            <label for="additionalCode">Additional Code:<span class="required"> *</span></label>
             <input
               type="text"
               id="additionalCode"
@@ -231,7 +236,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="mobileNumber">Mobile Number:</label>
+            <label for="mobileNumber">Mobile Number:<span class="required"> *</span></label>
             <input
               type="text"
               id="mobileNumber"
@@ -240,7 +245,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="emailAddress">Email:</label>
+            <label for="emailAddress">Email:<span class="required"> *</span></label>
             <input
               type="email"
               id="emailAddress"
@@ -257,7 +262,7 @@
 
           <div formGroupName="nationalIdentity">
           <div class="form-group">
-            <label for="idNumber">ID Number:</label>
+            <label for="idNumber">ID Number:<span class="required"> *</span></label>
             <input
               type="text"
               id="idNumber"
@@ -266,7 +271,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="expiryDate">Expiry Date:</label>
+            <label for="expiryDate">Expiry Date:<span class="required"> *</span></label>
             <input
               type="date"
               id="expiryDate"
@@ -275,7 +280,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="placeOfIssue">Place of Issue:</label>
+            <label for="placeOfIssue">Place of Issue:<span class="required"> *</span></label>
             <input
               type="text"
               id="placeOfIssue"
@@ -284,7 +289,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="dateOfBirth">Date of Birth:</label>
+            <label for="dateOfBirth">Date of Birth:<span class="required"> *</span></label>
             <input
               type="date"
               id="dateOfBirth"
@@ -293,7 +298,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="placeOfBirth">Place of Birth:</label>
+            <label for="placeOfBirth">Place of Birth:<span class="required"> *</span></label>
             <input
               type="text"
               id="placeOfBirth"
@@ -311,7 +316,7 @@
             <div *ngFor="let dependent of dependents.controls; let i = index">
               <div [formGroupName]="i">
                 <div class="form-group">
-                  <label for="dependentName">Name:</label>
+                  <label for="dependentName">Name:<span class="required"> *</span></label>
                   <input
                     type="text"
                     id="dependentName"
@@ -319,7 +324,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="dependentKinship">Kinship:</label>
+                  <label for="dependentKinship">Kinship:<span class="required"> *</span></label>
                   <input
                     type="text"
                     id="dependentKinship"
@@ -327,7 +332,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="dependentDateOfBirth">Date of Birth:</label>
+                  <label for="dependentDateOfBirth">Date of Birth:<span class="required"> *</span></label>
                   <input
                     type="date"
                     id="dependentDateOfBirth"
@@ -357,12 +362,12 @@
             <div *ngFor="let contact of emergencyContacts.controls; let i = index">
               <div [formGroupName]="i">
                 <div class="form-group">
-                  <label for="contactName">Name:</label>
+                  <label for="contactName">Name:<span class="required"> *</span></label>
                   <input type="text" id="contactName" formControlName="name" />
                 </div>
 
                 <div class="form-group">
-                  <label for="contactKinship">Kindship:</label>
+                  <label for="contactKinship">Kindship:<span class="required"> *</span></label>
                   <input
                     type="text"
                     id="contactKinship"
@@ -371,7 +376,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="contactPhoneNumber">Phone Number:</label>
+                  <label for="contactPhoneNumber">Phone Number:<span class="required"> *</span></label>
                   <input
                     type="text"
                     id="contactPhoneNumber"
@@ -404,7 +409,7 @@
           <h2>Attachments</h2>
 
           <div class="form-group">
-            <label for="cv">CV:</label>
+            <label for="cv">CV:<span class="required"> *</span></label>
             <input
               type="file"
               name="attachments"
@@ -419,7 +424,7 @@
           *ngIf="form.get('personalInfo')?.get('experienceLetters')?.value === 'Yes'"
         > -->
           <div class="form-group">
-            <label for="experienceLetters">Previous Experience Letters:</label>
+            <label for="experienceLetters">Previous Experience Letters (if there):</label>
             <input
               type="file"
               name="attachments"
@@ -433,7 +438,7 @@
 
           <div class="form-group">
             <label for="educationalCertificates"
-              >Educational Certificates:</label
+              >Educational Certificates:<span class="required"> *</span></label
             >
             <input
               type="file"
@@ -446,7 +451,7 @@
           </div>
 
           <div class="form-group">
-            <label for="personalPhoto">Personal Photo:</label>
+            <label for="personalPhoto">Personal Photo:<span class="required"> *</span></label>
             <input
               type="file"
               name="attachments"
@@ -458,7 +463,7 @@
           </div>
 
           <div class="form-group">
-            <label for="idCopy">Copy of your ID:</label>
+            <label for="idCopy">Copy of your ID:<span class="required"> *</span></label>
             <input
               type="file"
               name="attachments"
@@ -470,7 +475,7 @@
           </div>
 
           <div class="form-group">
-            <label for="nationalAddress">National Address:</label>
+            <label for="nationalAddress">National Address:<span class="required"> *</span></label>
             <input
               type="file"
               name="attachments"
@@ -482,7 +487,7 @@
           </div>
 
           <div class="form-group">
-            <label for="bankAccount">Your Bank Account:</label>
+            <label for="bankAccount">Your Bank Account:<span class="required"> *</span></label>
             <input
               type="file"
               name="attachments"

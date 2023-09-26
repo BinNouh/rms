@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 import { FormService } from './form.service';
 import { saveAs } from 'file-saver';
 import { AuthService } from '../authentication/auth.service';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-form-card',
@@ -23,7 +23,7 @@ export class FormComponent implements OnInit {
   private selectedFiles: Map<string, File> = new Map();
 
 
-  constructor(private fb: FormBuilder, private formService: FormService, private authService: AuthService, private _snackBar: MatSnackBar) {}
+  constructor(private fb: FormBuilder, private formService: FormService,private router: Router, private authService: AuthService, private _snackBar: MatSnackBar) {}
 
   async ngOnInit(): Promise<void> {
 
@@ -196,11 +196,10 @@ export class FormComponent implements OnInit {
 
  // Function to submit the form
  onSubmit() {
-
   if (this.form) {
     const formData = new FormData();
-    
-    // Append your other form data first
+
+    // Append form data
     formData.append('applicant', JSON.stringify(this.form.get('personalInfo')?.value));
     formData.append('address', JSON.stringify(this.form.get('addressInfo')?.value));
     formData.append('nationalIdentity', JSON.stringify(this.form.get('nationalIdentity')?.value));
@@ -213,25 +212,28 @@ export class FormComponent implements OnInit {
     });
 
     // Send the form data
-this.formService.submitForm(formData).subscribe(
-   (response: any) => {
-     console.log(response.message); // Access the message property of the response object
-     this.formSubmitted = true;
-     this.openSnackBar("Success");
-   },
-   (error) => {
-     console.log('An error occurred', error);
-     this.openSnackBar("Error!");
+    this.formService.submitForm(formData).subscribe(
+      (response: any) => {
+        console.log(response.message);
+        this.formSubmitted = true;
 
-   }
- );
+        // Redirect to the success page upon successful form submission
+        this.router.navigate(['/applicant/submit']);
+      },
+      (error) => {
+        console.log('An error occurred', error);
+        this.openSnackBar("Please, complete the missing fields!");  // Keep the snackbar for error notifications
+      }
+    );
   }
 }
+
 openSnackBar(message: string) {
   this._snackBar.open(message, "", {
     duration: 2000,
     panelClass: ['style-msg']
   });
 }
+
 
 }

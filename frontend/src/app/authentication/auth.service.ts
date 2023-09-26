@@ -27,9 +27,8 @@ export class AuthService {
   }
 
   login() {
-    this.keycloak.login({redirectUri: "http://localhost:4200/applicant/form"}).then();
+    this.keycloak.login({redirectUri: "http://localhost:4200/login-redirect"}).then();
   }
-
 
   isLoggedIn(): Promise<boolean> {
     return this.keycloak.isLoggedIn();

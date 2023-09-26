@@ -1,1 +1,40 @@
-<p>applicant-details works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMS</title>
+</head>
+<body>
+    
+    <div class="card-container">
+
+<!-- PersonalCardInfo -->
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{applicant.fullName}}</h5>
+      <p class="card-text">{{applicant.gender}} | {{applicant.martialStatus}} | {{applicant.bloodType}}</p>
+    </div>
+  </div>
+  
+  <!-- AddressCardInfo -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{applicant.address?.addressLine}}</h5>
+      <!-- More address details... -->
+    </div>
+  </div>
+  
+  <!-- DependencyCardInfo -->
+  <div *ngFor="let dep of applicant.dependencies" class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{dep.name}}</h5>
+      <!-- More dependency details... -->
+    </div>
+  </div>
+  
+  <!-- ... repeat for other entities ... -->
+      </div>
+      
+</body>
+</html>

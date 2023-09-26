@@ -3,6 +3,8 @@ import {ActivatedRouteSnapshot, Router, RouterStateSnapshot,} from '@angular/rou
 import {KeycloakAuthGuard, KeycloakService} from 'keycloak-angular';
 
 
+// ... your imports
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,11 +23,22 @@ export class AuthGuard extends KeycloakAuthGuard {
     let authenticated = this.keycloak.getKeycloakInstance().authenticated;
     if (!authenticated) {
       await this.keycloak.login({
-        redirectUri: window.location.origin + state.url,
+        redirectUri: window.location.origin + '/login-redirect',
       });
     }
 
-    const requiredRoles = route.data['rollen'];
+    // Redirect user based on roles after successful login
+    if (state.url === '/login-redirect') {
+      if (this.roles.includes('applicant-main')) {
+        this.router.navigate(['/applicant/form']);
+        return false;
+      } else if (this.roles.includes('recruiter-main')) {
+        this.router.navigate(['/api/dashboard']);
+        return false;
+      }
+    }
+
+    const requiredRoles = route.data['roles'];
 
     // Allow the user to proceed if no additional roles are required to access the route.
     if (!(requiredRoles instanceof Array) || requiredRoles.length === 0) {
@@ -35,5 +48,4 @@ export class AuthGuard extends KeycloakAuthGuard {
     // Allow the user to proceed if all the required roles are present.
     return requiredRoles.every((role) => this.roles.includes(role));
   }
-
 }

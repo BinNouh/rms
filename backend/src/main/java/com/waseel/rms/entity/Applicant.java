@@ -1,6 +1,8 @@
 package com.waseel.rms.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,6 +18,7 @@ public class Applicant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private Long applicant_id;
 
 
@@ -39,18 +42,24 @@ public class Applicant {
     // Default value for submitted forms "Under Review"
     private String submissionStatus = "Under Review";
 
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
+    @JsonIgnore // ignore during serialization
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Dependency> dependencies;
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
+
+    @JsonIgnore // ignore during serialization
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<EmergencyContact> emergencyContacts;
 
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
+    @JsonIgnore // ignore during serialization
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Attachment> attachments;
 
-    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
+    @JsonIgnore // ignore during serialization
+    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Address address;
 
-    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL)
+    @JsonIgnore // ignore during serialization
+    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private NationalIdentity nationalIdentity;
 
     // Constructors, getters, setters, etc.
