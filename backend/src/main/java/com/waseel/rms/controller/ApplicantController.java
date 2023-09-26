@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/dashboard")
+@RequestMapping("/api/dashboard")
+@CrossOrigin(origins = "http://localhost:4200") // This will allow the Angular app running on localhost:4200 to access this API.
 public class ApplicantController {
 
     @Autowired
@@ -34,6 +35,7 @@ public class ApplicantController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteApplicant(@PathVariable Long id) {
+        System.out.println("Received ID: " + id + ", Type: " + ((Object)id).getClass().getSimpleName());
         applicantService.deleteApplicant(id);
         return ResponseEntity.ok("Applicant deleted");
     }

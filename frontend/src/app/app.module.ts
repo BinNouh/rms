@@ -9,12 +9,13 @@ import { AppComponent } from './app.component';
 import { FormComponent } from './form/form.component';
 import { ApplicantDetailsComponent } from './applicant-details/applicant-details.component';
 import { ApplicantSuccessComponent } from './applicant-success/applicant-success.component';
-import { ApplicantLoginComponent } from './applicant-login/applicant-login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { RecruiterLoginComponent } from './recruiter-login/recruiter-login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { KeycloakAngularModule } from 'keycloak-angular'
-import { KeycloakService } from 'keycloak-angular'
+import { KeycloakAngularModule } from 'keycloak-angular';
+import { KeycloakService } from 'keycloak-angular';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EmptyRedirectComponent } from './empty-redirect/empty-redirect.component';
 
 const keycloakService: KeycloakService = new KeycloakService();
 
@@ -36,14 +37,15 @@ function initializeKeycloak(keycloak: KeycloakService) {
   declarations: [
     AppComponent,
     FormComponent,
-    ApplicantLoginComponent,
-    RecruiterLoginComponent,
     ApplicantSuccessComponent,
     DashboardComponent,
     ApplicantDetailsComponent,
     NotFoundComponent,
+    EmptyRedirectComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
+    MatSnackBarModule,
     KeycloakAngularModule,
     BrowserModule,
     AppRoutingModule,

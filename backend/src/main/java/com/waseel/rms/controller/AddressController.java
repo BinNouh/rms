@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/dashboard/addresses")
+@RequestMapping("/api/dashboard/addresses")
 public class AddressController {
 
     @Autowired

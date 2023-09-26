@@ -1,0 +1,60 @@
+body {
+    text-align: center;
+    padding: 40px 0;
+    background: #EBF0F5;
+    font-family: "Poppins", sans-serif;  /* Changed font to Poppins */
+}
+
+.logo-container {
+    position: relative;  
+    text-align: center;
+    width: 50%;
+    margin: 3% auto; 
+}
+
+.logo {
+    width: 30%;  /* Adjusted the logo size */
+    margin: 0 auto;  /* Centering the logo */
+}
+
+h1 {
+    color: #1f2993; 
+    font-weight: 500;  /* Adjusted the weight for Poppins font */
+    font-size: 36px;  /* Adjusted the size */
+    margin-bottom: 20px;  /* Increased margin for more space */
+}
+
+p {
+    color: #404F5E;
+    font-size: 18px;  /* Adjusted the size */
+    margin-top: 15px;  /* Introduced top margin for spacing */
+}
+
+i.checkmark {
+    color: #1f2993; 
+    font-size: 100px;
+    line-height: 200px;
+    margin-left: -15px;
+    font-style: normal; 
+}
+
+.card {
+    background: white;
+    padding: 60px;
+    border-radius: 15px;  /* Increased radius for softer edges */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);  /* Subtle box-shadow */
+    display: inline-block;
+    margin: 0 auto;
+    max-width: 90%;  
+}
+
+.checkmark-circle {
+    border-radius: 200px;
+    height: 200px;
+    width: 200px;
+    background: #F8FAF5;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
