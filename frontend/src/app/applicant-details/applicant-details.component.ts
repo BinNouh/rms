@@ -33,6 +33,7 @@ export class ApplicantDetailsComponent implements OnInit {
 
   getApplicantDetails(id: number): void {
     this.applicantService.getApplicant(id).subscribe(data => {
+      console.log(data);  // <-- Add this line
       this.applicant = data;
       this.address = data.address;
       this.attachments = data.attachments;
@@ -41,4 +42,5 @@ export class ApplicantDetailsComponent implements OnInit {
       this.nationalIdentity = data.nationalIdentity;
     });
   }
+  
 }

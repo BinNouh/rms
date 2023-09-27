@@ -31,7 +31,7 @@
         <div class="sidebar-footer">
             <span class="user-info">
                 <img src="https://waseel.s3.amazonaws.com/UserIcon.png" alt="User Avatar" class="user-avatar">
-                {{ username }}
+                {{ firstName }} {{ lastName }}
             </span>
             <button (click)="logout()">Logout</button>
         </div>
@@ -67,22 +67,22 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th> <!-- Added this line -->
+                    <!-- <th>ID</th>  -->
                     <th>Name</th>
                     <th>Gender</th>
                     <th>Status</th>
-                    <th>Submission Date</th> <!-- Added Submission Date column -->
+                    <th>Submission Date</th> 
                     <!-- Add other relevant columns -->
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let applicant of applicants">
-                    <td>{{ applicant.id }}</td> <!-- Added this line -->
-                    <td>{{ applicant.fullName }}</td>
+                    <!-- <td>{{ applicant.id }}</td>  -->
+                    <td><a [routerLink]="['/api/applicantDetails', applicant.id]">{{ applicant.fullName }}</a></td>
                     <td>{{ applicant.gender }}</td>
                     <td>{{ applicant.submissionStatus }}</td>
-                    <td>{{ applicant.submissionDate | date }}</td> <!-- Display Submission Date -->
+                    <td>{{ applicant.submissionDate | date }}</td> 
                     
                     <!-- Render other applicant details -->
                     <td>
