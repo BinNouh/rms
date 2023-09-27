@@ -32,15 +32,20 @@ export class ApplicantDetailsComponent implements OnInit {
   }
 
   getApplicantDetails(id: number): void {
-    this.applicantService.getApplicant(id).subscribe(data => {
-      console.log(data);  // <-- Add this line
-      this.applicant = data;
-      this.address = data.address;
-      this.attachments = data.attachments;
-      this.dependencies = data.dependencies;
-      this.emergencyContacts = data.emergencyContacts;
-      this.nationalIdentity = data.nationalIdentity;
-    });
+    this.applicantService.getApplicant(id).subscribe(
+      data => {
+        console.log(data);
+        this.applicant = data;
+        this.address = data.address;
+        this.attachments = data.attachments;
+        this.dependencies = data.dependencies;
+        this.emergencyContacts = data.emergencyContacts;
+        this.nationalIdentity = data.nationalIdentity;
+      },
+      error => {
+        console.error('There was an error fetching the data:', error);
+      }
+    );
   }
   
 }
