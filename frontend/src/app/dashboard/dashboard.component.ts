@@ -10,13 +10,15 @@ import { KeycloakService } from 'keycloak-angular';
 export class DashboardComponent implements OnInit {
   applicants: any[] = [];
 
-  public username: string = '';
+  public firstName: string = '';
+  public lastName: string = '';
+
 
   constructor(private applicantService: ApplicantService, private keycloakService: KeycloakService) {}
 
   ngOnInit(): void {
     this.loadApplicants();
-    this.getUsername();
+    this.getUserDetails();
   }
 
   loadApplicants(): void {
@@ -25,12 +27,14 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  private getUsername(): void {
+  private getUserDetails(): void {
     const userDetails = this.keycloakService.getKeycloakInstance().tokenParsed;
-    if (userDetails && userDetails['preferred_username']) {
-      this.username = userDetails['preferred_username'];
+    if (userDetails) {
+      this.firstName = userDetails['given_name'] || ''; // 'given_name' usually contains the first name in Keycloak.
+      this.lastName = userDetails['family_name'] || ''; // 'family_name' usually contains the last name in Keycloak.
     }
-  }
+}
+
 
   addNewApplicant(newApplicant: any): void {
     this.applicantService.addApplicant(newApplicant).subscribe(applicant => {

@@ -7,34 +7,72 @@
 </head>
 <body>
     
-    <div class="card-container">
+    <div *ngIf="applicant">
 
-<!-- PersonalCardInfo -->
-<div class="card">
-    <div class="card-body">
-      <h5 class="card-title">{{applicant.fullName}}</h5>
-      <p class="card-text">{{applicant.gender}} | {{applicant.martialStatus}} | {{applicant.bloodType}}</p>
-    </div>
-  </div>
-  
-  <!-- AddressCardInfo -->
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">{{applicant.address?.addressLine}}</h5>
-      <!-- More address details... -->
-    </div>
-  </div>
-  
-  <!-- DependencyCardInfo -->
-  <div *ngFor="let dep of applicant.dependencies" class="card">
-    <div class="card-body">
-      <h5 class="card-title">{{dep.name}}</h5>
-      <!-- More dependency details... -->
-    </div>
-  </div>
-  
-  <!-- ... repeat for other entities ... -->
+        <div *ngIf="applicant">
+            <!-- Personal Details -->
+            <div class="card">
+              <h2>Personal Details</h2>
+              <p><strong>Name:</strong> {{ applicant.fullName }}</p>
+              <p><strong>Nationality:</strong> {{ applicant.nationality }}</p>
+              <p><strong>Gender:</strong> {{ applicant.gender }}</p>
+              <p><strong>Blood Type:</strong> {{ applicant.bloodType }}</p>
+              <p><strong>Marital Status:</strong> {{ applicant.martialStatus }}</p>
+              <!-- ... other personal details ... -->
+            </div>
+          
+            <!-- Address Details -->
+            <div class="card" *ngIf="address">
+              <h2>Address</h2>
+              <p><strong>Address Line:</strong> {{ address.addressLine }}</p>
+              <p><strong>Country:</strong> {{ address.country }}</p>
+              <p><strong>City:</strong> {{ address.city }}</p>
+              <p><strong>Zip Code:</strong> {{ address.zipCode }}</p>
+              <p><strong>Additional Code:</strong> {{ address.additionalCode }}</p>
+              <p><strong>Mobile Number:</strong> {{ address.mobileNumber }}</p>
+              <p><strong>Email:</strong> {{ address.emailAddress }}</p>
+              <!-- ... other address details ... -->
+            </div>
+        
+            <!-- National Identity -->
+            <div class="card" *ngIf="nationalIdentity">
+              <h2>National Identity</h2>
+              <p><strong>ID:</strong> {{ nationalIdentity.idNumber }}</p>
+              <p><strong>Expiry Date:</strong> {{ nationalIdentity.expiryDate }}</p>
+              <p><strong>Place of Issue:</strong> {{ nationalIdentity.placeOfIssue }}</p>
+              <p><strong>Date of Birth:</strong> {{ nationalIdentity.dateOfBirth }}</p>
+              <p><strong>Place of Birth:</strong> {{ nationalIdentity.placeOfBirth }}</p>
+              <!-- ... other identity details ... -->
+            </div>
+          
+            <!-- Attachments -->
+            <div class="card" *ngIf="attachments && attachments.length">
+              <h2>Attachments</h2>
+              <ul>
+                <li *ngFor="let attachment of attachments">{{ attachment.fileName }}</li>
+              </ul>
+            </div>
+          
+            <!-- Dependencies -->
+            <div class="card" *ngIf="dependencies && dependencies.length">
+              <h2>Dependencies</h2>
+              <ul>
+                <li *ngFor="let dependency of dependencies">{{ dependency.name }}</li>
+              </ul>
+            </div>
+        
+            <!-- Emergency Contacts -->
+            <div class="card" *ngIf="emergencyContacts && emergencyContacts.length">
+              <h2>Emergency Contacts</h2>
+              <ul>
+                <li *ngFor="let contact of emergencyContacts">{{ contact.name }} - {{ contact.phoneNumber }}</li>
+              </ul>
+            </div>
+        </div>
+        
+      
       </div>
+      
       
 </body>
 </html>
