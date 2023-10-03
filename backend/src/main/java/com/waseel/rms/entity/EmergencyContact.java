@@ -1,5 +1,7 @@
 package com.waseel.rms.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -22,8 +24,8 @@ public class EmergencyContact {
     @Max(value = 9999999999999L, message = "Phone number can be at most 13 digits.")
     private Long phoneNumber;
 
-
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 

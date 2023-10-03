@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ApplicantService } from './applicant.service';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component'
 import { KeycloakService } from 'keycloak-angular';
 
 @Component({
@@ -16,7 +18,7 @@ export class DashboardComponent implements OnInit {
   gender: string = "";
   submissionStatus: string = "";
 
-  constructor(private applicantService: ApplicantService, private keycloakService: KeycloakService) {}
+  constructor(private applicantService: ApplicantService, private keycloakService: KeycloakService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadApplicants();
@@ -60,17 +62,19 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-
-
-
-  // filterApplicantsByGender(event: Event): void {
-  //   const target = event.target as HTMLSelectElement;
-  //   const gender = target.value;
-  //   this.applicantService.filterApplicantsByGender(gender).subscribe(filteredApplicants => {
-  //     this.applicants = filteredApplicants;
-  //   });
-  // }
   
+
+  confirmDelete(id: number): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteApplicant(id);
+      }
+    });
+  }
 
   deleteApplicant(id: number): void {
     console.log("Attempting to delete applicant with id:", id, "Type of ID:", typeof id);
@@ -94,18 +98,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // filterApplicantsByStatus(event: Event): void {
-  //   const target = event.target as HTMLSelectElement;
-  //   const status = target.value;
-  //   this.applicantService.filterApplicantsByStatus(status).subscribe(filteredApplicants => {
-  //     this.applicants = filteredApplicants;
-  //   });
-  // }
-
   logout(): void {
     this.keycloakService.logout('http://localhost:4200');  // Replace with your desired redirect URL after logout.
   }
   
-
-  // Implement other methods as per requirements
 }

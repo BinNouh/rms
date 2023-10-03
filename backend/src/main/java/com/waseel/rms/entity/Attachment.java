@@ -1,5 +1,7 @@
 package com.waseel.rms.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -21,7 +23,8 @@ public class Attachment {
 
 //    private String attachmentType;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="applicant_id")
     private Applicant applicant;
 

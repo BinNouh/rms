@@ -2,6 +2,7 @@ package com.waseel.rms.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -42,24 +43,24 @@ public class Applicant {
     // Default value for submitted forms "Under Review"
     private String submissionStatus = "Under Review";
 
-    @JsonIgnore // ignore during serialization
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // @JsonManagedReference
     private List<Dependency> dependencies;
 
-    @JsonIgnore // ignore during serialization
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // @JsonManagedReference
     private List<EmergencyContact> emergencyContacts;
 
-    @JsonIgnore // ignore during serialization
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // @JsonManagedReference
     private List<Attachment> attachments;
 
-    @JsonIgnore // ignore during serialization
-    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // @JsonManagedReference
     private Address address;
 
-    @JsonIgnore // ignore during serialization
-    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // @JsonManagedReference
     private NationalIdentity nationalIdentity;
 
     // Constructors, getters, setters, etc.

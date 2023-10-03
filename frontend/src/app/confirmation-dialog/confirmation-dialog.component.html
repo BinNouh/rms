@@ -1,0 +1,10 @@
+<h2 mat-dialog-title class="dialog-title">Confirm Delete</h2>
+
+<mat-dialog-content class="dialog-content">
+  Are you sure you want to delete this applicant?
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="onNoClick()" class="dialog-button">No</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="dialog-button">Yes</button>
+</mat-dialog-actions>

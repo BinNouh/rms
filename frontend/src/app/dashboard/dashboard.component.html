@@ -20,12 +20,9 @@
         </div>
         
         <!-- Navigation Links -->
-        <!-- <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Support</a></li>
-        </ul> -->
+        <ul class="nav-links">
+            <li><a href="/api/dashboard">Home</a></li>
+        </ul>
 
         <!-- Add the following section at the end of the sidebar -->
         <div class="sidebar-footer">
@@ -85,7 +82,7 @@
                     
                     <!-- Render other applicant details -->
                     <td>
-                        <button (click)="deleteApplicant(applicant.id)">Delete</button>
+                        <button (click)="confirmDelete(applicant.id)">Delete</button>
   
                         <!-- Dropdown for updating status -->
                         <label>

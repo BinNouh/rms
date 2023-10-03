@@ -16,6 +16,8 @@ import { KeycloakService } from 'keycloak-angular';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EmptyRedirectComponent } from './empty-redirect/empty-redirect.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const keycloakService: KeycloakService = new KeycloakService();
 
@@ -42,6 +44,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ApplicantDetailsComponent,
     NotFoundComponent,
     EmptyRedirectComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -52,6 +55,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatDialogModule,
     OAuthModule.forRoot()
   ],
   providers: [{

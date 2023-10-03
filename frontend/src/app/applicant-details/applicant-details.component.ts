@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApplicantService } from '../dashboard/applicant.service';  // Import the service
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-applicant-details',
@@ -16,10 +17,15 @@ export class ApplicantDetailsComponent implements OnInit {
   emergencyContacts: any[] = [];
   nationalIdentity: any;
 
+  public firstName: string = '';
+  public lastName: string = '';
+
+
   // Inject the ApplicantService into the component's constructor
   constructor(
     private route: ActivatedRoute,
-    private applicantService: ApplicantService  
+    private applicantService: ApplicantService,
+    private keycloakService: KeycloakService
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +35,16 @@ export class ApplicantDetailsComponent implements OnInit {
     
     // Fetch the applicant details using the service
     this.getApplicantDetails(this.applicantId);
+    this.getUserDetails();
   }
+
+  private getUserDetails(): void {
+    const userDetails = this.keycloakService.getKeycloakInstance().tokenParsed;
+    if (userDetails) {
+      this.firstName = userDetails['given_name'] || ''; // 'given_name' usually contains the first name in Keycloak.
+      this.lastName = userDetails['family_name'] || ''; // 'family_name' usually contains the last name in Keycloak.
+    }
+}
 
   getApplicantDetails(id: number): void {
     this.applicantService.getApplicant(id).subscribe(
@@ -46,6 +61,10 @@ export class ApplicantDetailsComponent implements OnInit {
         console.error('There was an error fetching the data:', error);
       }
     );
+  }
+
+  logout(): void {
+    this.keycloakService.logout('http://localhost:4200');  // Replace with your desired redirect URL after logout.
   }
   
 }

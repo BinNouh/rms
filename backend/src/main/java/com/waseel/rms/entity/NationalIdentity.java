@@ -7,6 +7,8 @@ import lombok.Getter;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Getter
 @Entity
 public class NationalIdentity {
@@ -29,7 +31,8 @@ public class NationalIdentity {
     @NotBlank(message = "Place of Birth is required.")
     private String placeOfBirth;
 
-    @OneToOne
+    @JsonIgnore 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "applicant_id")
     private Applicant applicant;
 

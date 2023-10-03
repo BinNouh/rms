@@ -8,8 +8,9 @@ import com.waseel.rms.specification.ApplicantSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-        import java.time.ZonedDateTime;
+import java.time.ZonedDateTime;
         import java.util.List;
         import java.util.Optional;
 
@@ -20,11 +21,14 @@ public class ApplicantService {
     private ApplicantRepository applicantRepository;
 
     // List all applicants
+    @Transactional
     public List<Applicant> getAllApplicants() {
         return applicantRepository.findAll();
     }
 
     // List applicant by ID
+    
+    @Transactional
     public Optional<Applicant> getApplicantById(Long id) {
         return applicantRepository.findById(id);
     }
@@ -67,14 +71,6 @@ public class ApplicantService {
                     return applicantRepository.save(newApplicant);
                 });
     }
-
-    // public List<Applicant> getApplicantsBySubmissionStatus(String submissionStatus) {
-    //     return applicantRepository.findBySubmissionStatus(submissionStatus);
-    // }
-
-    // public List<Applicant> getApplicantsByGender(String gender) {
-    //     return applicantRepository.findByGender(gender);
-    // }
 
     public List<Applicant> filterApplicants(String gender, String submissionStatus) {
         Specification<Applicant> spec = Specification.where(null);
