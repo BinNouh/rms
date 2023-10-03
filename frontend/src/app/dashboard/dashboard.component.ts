@@ -13,6 +13,8 @@ export class DashboardComponent implements OnInit {
   public firstName: string = '';
   public lastName: string = '';
 
+  gender: string = "";
+  submissionStatus: string = "";
 
   constructor(private applicantService: ApplicantService, private keycloakService: KeycloakService) {}
 
@@ -61,13 +63,13 @@ export class DashboardComponent implements OnInit {
 
 
 
-  filterApplicantsByGender(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    const gender = target.value;
-    this.applicantService.filterApplicantsByGender(gender).subscribe(filteredApplicants => {
-      this.applicants = filteredApplicants;
-    });
-  }
+  // filterApplicantsByGender(event: Event): void {
+  //   const target = event.target as HTMLSelectElement;
+  //   const gender = target.value;
+  //   this.applicantService.filterApplicantsByGender(gender).subscribe(filteredApplicants => {
+  //     this.applicants = filteredApplicants;
+  //   });
+  // }
   
 
   deleteApplicant(id: number): void {
@@ -86,14 +88,19 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-
-  filterApplicantsByStatus(event: Event): void {
-    const target = event.target as HTMLSelectElement;
-    const status = target.value;
-    this.applicantService.filterApplicantsByStatus(status).subscribe(filteredApplicants => {
-      this.applicants = filteredApplicants;
+  filterData(): void {
+    this.applicantService.filterApplicants(this.gender, this.submissionStatus).subscribe(data => {
+      this.applicants = data;
     });
   }
+
+  // filterApplicantsByStatus(event: Event): void {
+  //   const target = event.target as HTMLSelectElement;
+  //   const status = target.value;
+  //   this.applicantService.filterApplicantsByStatus(status).subscribe(filteredApplicants => {
+  //     this.applicants = filteredApplicants;
+  //   });
+  // }
 
   logout(): void {
     this.keycloakService.logout('http://localhost:4200');  // Replace with your desired redirect URL after logout.

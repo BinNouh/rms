@@ -32,11 +32,11 @@ public class WebSecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/admin/**").hasRole("admin") // New Line: Admin-only endpoints
-                .requestMatchers("/api/**").hasRole("recruiter-spring") // New Line: Recruiter-only endpoints
-                .requestMatchers("/applicant/**").hasRole("applicant-spring") // New Line: Applicant-only endpoints
-//                .requestMatchers("/**")
-//                .permitAll() // Allow any request to be accessed
+                // .requestMatchers("/admin/**").hasRole("admin") // New Line: Admin-only endpoints
+                // .requestMatchers("/api/**").hasRole("recruiter-spring") // New Line: Recruiter-only endpoints
+                // .requestMatchers("/applicant/**").hasRole("applicant-spring") // New Line: Applicant-only endpoints
+               .requestMatchers("/**")
+               .permitAll() // Allow any request to be accessed
                 .anyRequest()
                 .authenticated(); // Modified Line: Any other request just needs authentication
 

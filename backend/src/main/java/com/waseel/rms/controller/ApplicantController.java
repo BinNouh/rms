@@ -21,6 +21,13 @@ public class ApplicantController {
         return applicantService.getAllApplicants();
     }
 
+    @GetMapping("/filter")
+    public List<Applicant> filterApplicants(
+            @RequestParam(required = false) String gender,
+            @RequestParam(required = false) String submissionStatus) {
+        return applicantService.filterApplicants(gender, submissionStatus);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Applicant> getApplicant(@PathVariable Long id) {
         return applicantService.getApplicantById(id)
@@ -38,20 +45,6 @@ public class ApplicantController {
         System.out.println("Received ID: " + id + ", Type: " + ((Object)id).getClass().getSimpleName());
         applicantService.deleteApplicant(id);
         return ResponseEntity.ok("Applicant deleted");
-    }
-
-    // Filtering by submission status
-    @GetMapping("/filter-by-status")
-    public ResponseEntity<List<Applicant>> filterApplicantsBySubmissionStatus(@RequestParam String status) {
-        List<Applicant> applicants = applicantService.getApplicantsBySubmissionStatus(status);
-        return ResponseEntity.ok(applicants);
-    }
-
-    // Filtering by gender
-    @GetMapping("/filter-by-gender")
-    public ResponseEntity<List<Applicant>> filterApplicantsByGender(@RequestParam String gender) {
-        List<Applicant> applicants = applicantService.getApplicantsByGender(gender);
-        return ResponseEntity.ok(applicants);
     }
 
     // Update applicant status (Under Review (default after submission), Reviewed, Rejected)

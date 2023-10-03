@@ -3,8 +3,11 @@ package com.waseel.rms.service;
 
         import com.waseel.rms.entity.Applicant;
         import com.waseel.rms.repository.ApplicantRepository;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.stereotype.Service;
+import com.waseel.rms.specification.ApplicantSpecification;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 
         import java.time.ZonedDateTime;
         import java.util.List;
@@ -65,12 +68,26 @@ public class ApplicantService {
                 });
     }
 
-    public List<Applicant> getApplicantsBySubmissionStatus(String submissionStatus) {
-        return applicantRepository.findBySubmissionStatus(submissionStatus);
-    }
+    // public List<Applicant> getApplicantsBySubmissionStatus(String submissionStatus) {
+    //     return applicantRepository.findBySubmissionStatus(submissionStatus);
+    // }
 
-    public List<Applicant> getApplicantsByGender(String gender) {
-        return applicantRepository.findByGender(gender);
+    // public List<Applicant> getApplicantsByGender(String gender) {
+    //     return applicantRepository.findByGender(gender);
+    // }
+
+    public List<Applicant> filterApplicants(String gender, String submissionStatus) {
+        Specification<Applicant> spec = Specification.where(null);
+
+        if (gender != null) {
+            spec = spec.and(ApplicantSpecification.genderIs(gender));
+        }
+
+        if (submissionStatus != null) {
+            spec = spec.and(ApplicantSpecification.submissionStatusIs(submissionStatus));
+        }
+
+        return applicantRepository.findAll(spec);
     }
 
 }
