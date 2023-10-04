@@ -1,5 +1,6 @@
 package com.waseel.rms.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
@@ -24,9 +25,9 @@ public class EmergencyContact {
     @Max(value = 9999999999999L, message = "Phone number can be at most 13 digits.")
     private Long phoneNumber;
 
-    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "applicant_id")
+    @JsonBackReference(value="applicant-emergencyContacts")
     private Applicant applicant;
 
     // Constructors, getters, setters, etc.

@@ -27,12 +27,21 @@ public class ApplicantService {
     }
 
     // List applicant by ID
-    
     @Transactional
     public Optional<Applicant> getApplicantById(Long id) {
-        return applicantRepository.findById(id);
+        Optional<Applicant> applicantOptional = applicantRepository.findById(id);
+        applicantOptional.ifPresent(applicant -> {
+            // This line will initialize the Address if it's LAZY-loaded
+            applicant.getAddress();
+        });
+        return applicantOptional;
     }
 
+    @Transactional
+    public Optional<Applicant> getApplicantByIdWithRelations(Long id) {
+        return applicantRepository.findByIdWithRelations(id);
+    }
+    
     // Delete Applicant
     public void deleteApplicant(Long id) {
         applicantRepository.deleteById(id);

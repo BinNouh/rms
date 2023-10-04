@@ -43,26 +43,26 @@ public class Applicant {
     // Default value for submitted forms "Under Review"
     private String submissionStatus = "Under Review";
 
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    // @JsonManagedReference
-    private List<Dependency> dependencies;
-
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    // @JsonManagedReference
-    private List<EmergencyContact> emergencyContacts;
-
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    // @JsonManagedReference
-    private List<Attachment> attachments;
-
-    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    // @JsonManagedReference
-    private Address address;
-
-    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    // @JsonManagedReference
+    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference(value="applicant-nationalIdentity")
     private NationalIdentity nationalIdentity;
-
+    
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference(value="applicant-dependencies")
+    private List<Dependency> dependencies;
+    
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference(value="applicant-emergencyContacts")
+    private List<EmergencyContact> emergencyContacts;
+    
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference(value="applicant-attachments")
+    private List<Attachment> attachments;
+    
+    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference(value="applicant-address")
+    private Address address;
+    
     // Constructors, getters, setters, etc.
 
     public Applicant() {}

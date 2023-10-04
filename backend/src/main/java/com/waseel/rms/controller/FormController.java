@@ -48,7 +48,6 @@ public class FormController {
     @Autowired
     private NationalIdentityRepository nationalIdentityRepository;
 
-    @Transactional
     @PreAuthorize("hasRole('applicant-spring')")
     @PostMapping("/submit")
     public ResponseEntity<Map<String, String>> submitForm(

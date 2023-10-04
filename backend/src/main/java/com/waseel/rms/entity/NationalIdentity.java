@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Getter
@@ -30,11 +31,12 @@ public class NationalIdentity {
 
     @NotBlank(message = "Place of Birth is required.")
     private String placeOfBirth;
-
-    @JsonIgnore 
+    
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "applicant_id")
+    @JsonBackReference(value="applicant-nationalIdentity")
     private Applicant applicant;
+
 
     // Constructors, getters, setters, etc.
 
