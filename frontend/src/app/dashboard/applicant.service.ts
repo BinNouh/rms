@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -25,12 +25,16 @@ export class ApplicantService {
   updateApplicantStatus(id: number, status: string): Observable<any> {
     return this.http.put(`${this.baseUrl}/${id}/status?status=${status}`, {});
 }
-  filterApplicantsByStatus(status: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/filter-by-status`, {params: {status}});
-  }
 
-  filterApplicantsByGender(gender: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/filter-by-gender`, {params: {gender}});
+  filterApplicants(gender?: string, submissionStatus?: string): Observable<any> {
+    let params = new HttpParams();
+    if (gender) {
+      params = params.append('gender', gender);
+    }
+    if (submissionStatus) {
+      params = params.append('submissionStatus', submissionStatus);
+    }
+    return this.http.get(`${this.baseUrl}/filter`, { params: params });
   }
 
   deleteApplicant(id: number): Observable<any> {

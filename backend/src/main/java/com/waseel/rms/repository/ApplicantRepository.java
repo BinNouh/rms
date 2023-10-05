@@ -1,14 +1,24 @@
 package com.waseel.rms.repository;
 
 import com.waseel.rms.entity.Applicant;
+
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
-public interface ApplicantRepository extends JpaRepository<Applicant, Long> {
-    // This will allow you to find applicants by submission status
-    List<Applicant> findBySubmissionStatusAndGender(String submissionStatus, String gender);
-    List<Applicant> findBySubmissionStatus(String submissionStatus);
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-    List<Applicant> findByGender(String gender);
 
+public interface ApplicantRepository extends JpaRepository<Applicant, Long>, JpaSpecificationExecutor<Applicant> {
+    @Query("SELECT a FROM Applicant a " +
+    "JOIN FETCH a.address " +
+    "JOIN FETCH a.nationalIdentity " +
+    "LEFT JOIN FETCH a.dependencies " +
+    "LEFT JOIN FETCH a.emergencyContacts " +
+    "LEFT JOIN FETCH a.attachments " +
+    "WHERE a.id = :id")
+Optional<Applicant> findByIdWithRelations(@Param("id") Long id);
 
 }
+

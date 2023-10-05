@@ -20,13 +20,13 @@ export class FormService {
     }
   
     // define function to download files
-    download(filename: string): Observable<HttpEvent<Blob>> {
-      return this.httpClient.get(`${this.apiBaseUrl}/download/${filename}/`, {
-        reportProgress: true,
-        observe: 'events',
-        responseType: 'blob'
+    download(attachmentId: number): Observable<HttpEvent<Blob>> {
+      return this.httpClient.get(`http://localhost:8081/api/dashboard/attachments/download/${attachmentId}`, {
+          reportProgress: true,
+          observe: 'events',
+          responseType: 'blob'
       });
-    }
+  }  
 
     submitForm(formData: FormData): Observable<any> {
       return this.httpClient.post<any>(`${this.apiBaseUrl}/submit`, formData);

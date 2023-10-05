@@ -1,7 +1,7 @@
 package com.waseel.rms.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -42,26 +42,26 @@ public class Applicant {
     // Default value for submitted forms "Under Review"
     private String submissionStatus = "Under Review";
 
-    @JsonIgnore // ignore during serialization
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Dependency> dependencies;
-
-    @JsonIgnore // ignore during serialization
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<EmergencyContact> emergencyContacts;
-
-    @JsonIgnore // ignore during serialization
-    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Attachment> attachments;
-
-    @JsonIgnore // ignore during serialization
     @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Address address;
-
-    @JsonIgnore // ignore during serialization
-    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference(value="applicant-nationalIdentity")
     private NationalIdentity nationalIdentity;
-
+    
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference(value="applicant-dependencies")
+    private List<Dependency> dependencies;
+    
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference(value="applicant-emergencyContacts")
+    private List<EmergencyContact> emergencyContacts;
+    
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference(value="applicant-attachments")
+    private List<Attachment> attachments;
+    
+    @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference(value="applicant-address")
+    private Address address;
+    
     // Constructors, getters, setters, etc.
 
     public Applicant() {}

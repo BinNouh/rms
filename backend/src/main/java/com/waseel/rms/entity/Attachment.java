@@ -1,5 +1,8 @@
 package com.waseel.rms.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -21,8 +24,9 @@ public class Attachment {
 
 //    private String attachmentType;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="applicant_id")
+    @JsonBackReference(value="applicant-attachments")
     private Applicant applicant;
 
     // Constructors, getters, setters, etc.

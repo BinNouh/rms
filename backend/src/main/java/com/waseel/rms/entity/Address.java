@@ -1,5 +1,8 @@
 package com.waseel.rms.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -41,6 +44,7 @@ public class Address {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "applicant_id")
+    @JsonBackReference(value="applicant-address")
     private Applicant applicant;
 
     // Constructors, getters, setters, etc.

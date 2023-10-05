@@ -3,10 +3,14 @@ package com.waseel.rms.service;
 
         import com.waseel.rms.entity.Applicant;
         import com.waseel.rms.repository.ApplicantRepository;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.stereotype.Service;
+import com.waseel.rms.specification.ApplicantSpecification;
 
-        import java.time.ZonedDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.ZonedDateTime;
         import java.util.List;
         import java.util.Optional;
 
@@ -17,15 +21,27 @@ public class ApplicantService {
     private ApplicantRepository applicantRepository;
 
     // List all applicants
+    @Transactional
     public List<Applicant> getAllApplicants() {
         return applicantRepository.findAll();
     }
 
     // List applicant by ID
+    @Transactional
     public Optional<Applicant> getApplicantById(Long id) {
-        return applicantRepository.findById(id);
+        Optional<Applicant> applicantOptional = applicantRepository.findById(id);
+        applicantOptional.ifPresent(applicant -> {
+            // This line will initialize the Address if it's LAZY-loaded
+            applicant.getAddress();
+        });
+        return applicantOptional;
     }
 
+    @Transactional
+    public Optional<Applicant> getApplicantByIdWithRelations(Long id) {
+        return applicantRepository.findByIdWithRelations(id);
+    }
+    
     // Delete Applicant
     public void deleteApplicant(Long id) {
         applicantRepository.deleteById(id);
@@ -65,12 +81,18 @@ public class ApplicantService {
                 });
     }
 
-    public List<Applicant> getApplicantsBySubmissionStatus(String submissionStatus) {
-        return applicantRepository.findBySubmissionStatus(submissionStatus);
-    }
+    public List<Applicant> filterApplicants(String gender, String submissionStatus) {
+        Specification<Applicant> spec = Specification.where(null);
 
-    public List<Applicant> getApplicantsByGender(String gender) {
-        return applicantRepository.findByGender(gender);
+        if (gender != null) {
+            spec = spec.and(ApplicantSpecification.genderIs(gender));
+        }
+
+        if (submissionStatus != null) {
+            spec = spec.and(ApplicantSpecification.submissionStatusIs(submissionStatus));
+        }
+
+        return applicantRepository.findAll(spec);
     }
 
 }

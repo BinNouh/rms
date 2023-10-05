@@ -3,7 +3,6 @@ package com.waseel.rms.service;
 import com.waseel.rms.entity.Applicant;
 import com.waseel.rms.entity.Attachment;
 import com.waseel.rms.repository.AttachmentRepository;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

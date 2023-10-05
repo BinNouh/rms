@@ -48,7 +48,6 @@ public class FormController {
     @Autowired
     private NationalIdentityRepository nationalIdentityRepository;
 
-    @Transactional
     @PreAuthorize("hasRole('applicant-spring')")
     @PostMapping("/submit")
     public ResponseEntity<Map<String, String>> submitForm(
@@ -139,7 +138,7 @@ public class FormController {
         return ResponseEntity.ok().body(filenames);
     }
 
-    @GetMapping("/{id}/download")
+    @GetMapping("download/{id}")
     public ResponseEntity<byte[]> downloadAttachment(@PathVariable Long id) throws IOException {
         byte[] fileBytes = attachmentService.getAttachmentFile(id);
         if (fileBytes == null) {
