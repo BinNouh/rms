@@ -75,11 +75,29 @@
             <!-- Attachments -->
             <div class="card" *ngIf="attachments && attachments.length">
               <h2>Attachments</h2>
-              <ul>
-                <li *ngFor="let attachment of attachments">{{ attachment.fileName }}</li>
-              </ul>
+              <table>
+                  <thead>
+                      <tr>
+                          <th>Attachment Type</th>
+                          <th>File Name</th>
+                          <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <ng-container *ngFor="let attachment of attachments; let i = index">
+                          <tr>
+                              <td>{{ getAttachmentType(i) }}</td>
+                              <td>{{ attachment.fileName }}</td>
+                              <td>
+                                  <button (click)="onDownloadFile(attachment.attachment_id, attachment.fileName)">Download</button>
+                              </td>
+                          </tr>
+                      </ng-container>
+                  </tbody>
+              </table>
             </div>
-          
+
+   
             <!-- Dependencies -->
             <div class="card" *ngIf="dependencies && dependencies.length">
               <h2>Dependencies</h2>

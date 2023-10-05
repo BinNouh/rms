@@ -25,13 +25,6 @@ export class ApplicantService {
   updateApplicantStatus(id: number, status: string): Observable<any> {
     return this.http.put(`${this.baseUrl}/${id}/status?status=${status}`, {});
 }
-  // filterApplicantsByStatus(status: string): Observable<any> {
-  //   return this.http.get(`${this.baseUrl}/filter-by-status`, {params: {status}});
-  // }
-
-  // filterApplicantsByGender(gender: string): Observable<any> {
-  //   return this.http.get(`${this.baseUrl}/filter-by-gender`, {params: {gender}});
-  // }
 
   filterApplicants(gender?: string, submissionStatus?: string): Observable<any> {
     let params = new HttpParams();

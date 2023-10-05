@@ -138,7 +138,7 @@ public class FormController {
         return ResponseEntity.ok().body(filenames);
     }
 
-    @GetMapping("/{id}/download")
+    @GetMapping("download/{id}")
     public ResponseEntity<byte[]> downloadAttachment(@PathVariable Long id) throws IOException {
         byte[] fileBytes = attachmentService.getAttachmentFile(id);
         if (fileBytes == null) {

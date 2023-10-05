@@ -70,17 +70,19 @@ export class FormComponent implements OnInit {
     
 
       // define a function to download files
-  onDownloadFile(filename: string): void {
-    this.formService.download(filename).subscribe(
-      event => {
-        console.log(event);
-        this.reportProgress(event);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error);
-      }
-    );
-  }
+      onDownloadFile(attachmentId: number): void {
+        this.formService.download(attachmentId).subscribe(
+            event => {
+                console.log(event);
+                this.reportProgress(event);
+            },
+            (error: HttpErrorResponse) => {
+                console.log(error);
+            }
+        );
+    }
+    
+      
 
     private reportProgress(httpEvent: HttpEvent<string[] | Blob>): void {
       switch(httpEvent.type) {
@@ -124,37 +126,37 @@ export class FormComponent implements OnInit {
 
   createPersonalInfoFormGroup(): FormGroup {
     return this.fb.group({
-      fullName: ['Abdulrahman Bin Nouh', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-      nationality: ['Saudi Arabia', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
-      gender: ['Male', Validators.required],
-      bloodType: ['O+', Validators.required],
-      martialStatus: ['Single', Validators.required],
+      fullName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+      nationality: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+')]],
+      gender: ['', Validators.required],
+      bloodType: ['', Validators.required],
+      martialStatus: ['', Validators.required],
       // experienceLetters: ['', Validators.required]
     });
   }
 
   createAddressInfoFormGroup(): FormGroup {
     return this.fb.group({
-      addressLine: ['Riyadh, Al-Taawun', Validators.required],
-      country: ['Saudi Arabia', Validators.required],
-      city: ['Riyadh', Validators.required],
-      zipCode: ['12875', Validators.required],
-      additionalCode: ['7890'],
+      addressLine: ['', Validators.required],
+      country: ['', Validators.required],
+      city: ['', Validators.required],
+      zipCode: ['', Validators.required],
+      additionalCode: [''],
       mobileNumber: [
-        '0595405020',
+        '',
         [Validators.required, Validators.pattern('^([0-9]{13})$')],
       ], // 13 digits including coutry code
-      emailAddress: ['Rahmandev2022@gmail.com', [Validators.required, Validators.email]],
+      emailAddress: ['', [Validators.required, Validators.email]],
     });
   }
 
   createNationalIdentityFormGroup(): FormGroup {
     return this.fb.group({
-      idNumber: ['1112989890', Validators.required],
+      idNumber: ['', Validators.required],
       expiryDate: ['', Validators.required],
-      placeOfIssue: ['Riyadh', Validators.required],
+      placeOfIssue: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-      placeOfBirth: ['Riyadh', Validators.required],
+      placeOfBirth: ['', Validators.required],
     });
   }
 
@@ -169,8 +171,8 @@ export class FormComponent implements OnInit {
   addDependent(): void {
     this.dependents.push(
       this.fb.group({
-        name: ['Ibrahim', Validators.required],
-        kinship: ['Father', Validators.required],
+        name: ['', Validators.required],
+        kinship: ['', Validators.required],
         dateOfBirth: ['', Validators.required],
       })
     );
@@ -179,9 +181,9 @@ export class FormComponent implements OnInit {
   addEmergencyContact(): void {
     this.emergencyContacts.push(
       this.fb.group({
-        name: ['Ibrahim', Validators.required],
-        kinship: ['Father', Validators.required],
-        phoneNumber: ['0503122095', [Validators.required, Validators.pattern('^([0-9]{13})$')],] // 13 digits includig coountry code
+        name: ['', Validators.required],
+        kinship: ['', Validators.required],
+        phoneNumber: ['', [Validators.required, Validators.pattern('^([0-9]{13})$')],] // 13 digits includig coountry code
       })
     );
   }

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApplicantService } from '../dashboard/applicant.service';  // Import the service
+import { ApplicantService } from '../dashboard/applicant.service';
+import { FormService } from '../form/form.service';
 import { KeycloakService } from 'keycloak-angular';
+import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-applicant-details',
@@ -20,12 +23,19 @@ export class ApplicantDetailsComponent implements OnInit {
   public firstName: string = '';
   public lastName: string = '';
 
+  filenames: string[] = [];
+  fileStatus = { status: '', requestType: '', percent: 0 };
+
+  currentDownloadingFileName: string = ''; // <-- Added this to store the filename before download
+
+
 
   // Inject the ApplicantService into the component's constructor
   constructor(
     private route: ActivatedRoute,
     private applicantService: ApplicantService,
-    private keycloakService: KeycloakService
+    private keycloakService: KeycloakService,
+    private formService: FormService
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +56,22 @@ export class ApplicantDetailsComponent implements OnInit {
     }
 }
 
+    // List of fixed attachment types
+    attachmentTypes: string[] = [
+      'CV',
+      'Previous Experience Letters',
+      'Educational Certificates',
+      'Personal Photo',
+      'National ID',
+      'National Address',
+      'Bank Account',
+      'Family Card'
+  ];
+
+  getAttachmentType(index: number): string {
+      return this.attachmentTypes[index] || 'Unknown';
+  }
+
   getApplicantDetails(id: number): void {
     this.applicantService.getApplicant(id).subscribe(
       data => {
@@ -63,6 +89,56 @@ export class ApplicantDetailsComponent implements OnInit {
     );
   }
 
+  onDownloadFile(attachmentId: number, attachmentName: string): void {
+    this.currentDownloadingFileName = attachmentName; // Set the filename before downloading
+    this.formService.download(attachmentId).subscribe(
+      event => {
+        console.log(event);
+        this.reportProgress(event);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
+  }
+    
+
+  private reportProgress(httpEvent: HttpEvent<string[] | Blob>): void {
+    switch(httpEvent.type) {
+      case HttpEventType.UploadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total!, 'Uploading... ');
+        break;
+      case HttpEventType.DownloadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total!, 'Downloading... ');
+        break;
+      case HttpEventType.ResponseHeader:
+        console.log('Header returned', httpEvent);
+        break;
+        case HttpEventType.Response:
+          if (httpEvent.body instanceof Array) {
+            this.fileStatus.status = 'done';
+            for (const filename of httpEvent.body) {
+              this.filenames.unshift(filename);
+            }
+          } else {
+            const downloadedFileName = httpEvent.headers.get('File-Name') || this.currentDownloadingFileName || 'default-filename.ext'; // <-- Modified this line to use the currentDownloadingFileName as a fallback
+            saveAs(new File([httpEvent.body!], downloadedFileName, 
+                    {type: `${httpEvent.headers.get('Content-Type')};charset=utf-8`}));
+          }
+          this.fileStatus.status = 'done';
+          break;
+        default:
+          console.log(httpEvent);
+          break;
+      
+    }
+  }
+
+  private updateStatus(loaded: number, total: number, requestType: string): void {
+    this.fileStatus.status = 'progress';
+    this.fileStatus.requestType = requestType;
+    this.fileStatus.percent = Math.round(100 * loaded / total);
+  }
   logout(): void {
     this.keycloakService.logout('http://localhost:4200');  // Replace with your desired redirect URL after logout.
   }
