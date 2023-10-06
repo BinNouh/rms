@@ -22,6 +22,7 @@ export class FormComponent implements OnInit {
   // A map to keep track of field names and their corresponding files
   private selectedFiles: Map<string, File> = new Map();
 
+  workExperience: String = '';
 
   constructor(private fb: FormBuilder, private formService: FormService,private router: Router, private authService: AuthService, private _snackBar: MatSnackBar) {}
 
@@ -131,7 +132,8 @@ export class FormComponent implements OnInit {
       gender: ['', Validators.required],
       bloodType: ['', Validators.required],
       martialStatus: ['', Validators.required],
-      // experienceLetters: ['', Validators.required]
+      //workExperience: ['', Validators.required],
+      
     });
   }
 
@@ -235,6 +237,11 @@ openSnackBar(message: string) {
     duration: 2000,
     panelClass: ['style-msg']
   });
+}
+
+
+showWorkExperienceUploads(event: any) {
+  this.workExperience = event.target.value;
 }
 
 

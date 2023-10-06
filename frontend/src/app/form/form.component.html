@@ -131,7 +131,7 @@
 
           <div formGroupName="personalInfo">
           <div class="form-group">
-            <label for="fullName">Full Name:<span class="required"> *</span></label>
+            <label for="fullName">Full Name (as per National ID):<span class="required"> *</span></label>
             <input type="text" id="fullName" formControlName="fullName" />
             <div *ngIf="form.get('personalInfo.fullName')?.invalid && formSubmitted">
               <small *ngIf="form.get('personalInfo.fullName')?.errors?.['required']">This field is required.</small>
@@ -178,6 +178,19 @@
             >
               <option value="Single">Single</option>
               <option value="Married">Married</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="workExperience">Work Experience:<span class="required"> *</span></label>
+            <select
+              id="workExperience"
+              name="workExperience"
+              formControlName="workExperience"
+              (change)="showWorkExperienceUploads($event)"
+              required
+            >
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </select>
           </div>
           <!-- <div class="form-group">
@@ -419,10 +432,23 @@
               required
             />
           </div>
-
-          <!-- <div
-          *ngIf="form.get('personalInfo')?.get('experienceLetters')?.value === 'Yes'"
-        > -->
+        <div
+         *ngIf="workExperience == 'Yes'"
+      >
+      <div class="form-group">
+        <label for="workClearance">Your Work Clearance (if there):</label>
+        <input
+          type="file"
+          name="attachments"
+          id="workClearance"
+          (change)="onUploadFile($event, 'workClearance')"
+          accept=".pdf,.jpg,.png,.jpeg"
+          
+        />
+      </div></div>
+         <div
+         *ngIf="workExperience == 'Yes'"
+      >
           <div class="form-group">
             <label for="experienceLetters">Previous Experience Letters (if there):</label>
             <input
@@ -434,6 +460,7 @@
               
             />
           </div>
+        </div>
         <!-- </div> -->
 
           <div class="form-group">
