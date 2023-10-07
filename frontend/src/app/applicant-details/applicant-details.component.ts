@@ -5,6 +5,9 @@ import { FormService } from '../form/form.service';
 import { KeycloakService } from 'keycloak-angular';
 import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 import { saveAs } from 'file-saver';
+import * as pdfMake from 'pdfmake/build/pdfmake.js';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
+(pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-applicant-details',
@@ -27,8 +30,6 @@ export class ApplicantDetailsComponent implements OnInit {
   fileStatus = { status: '', requestType: '', percent: 0 };
 
   currentDownloadingFileName: string = ''; // <-- Added this to store the filename before download
-
-
 
   // Inject the ApplicantService into the component's constructor
   constructor(
@@ -139,6 +140,68 @@ export class ApplicantDetailsComponent implements OnInit {
     this.fileStatus.requestType = requestType;
     this.fileStatus.percent = Math.round(100 * loaded / total);
   }
+
+  // Print all fields in PDF
+
+  generatePDF() {
+    let docDefinition: any = {
+      content: [
+        { text: 'Personal Details', style: 'header' },
+        `Name: ${this.applicant.fullName}`,
+        `Nationality: ${this.applicant.nationality}`,
+        `Gender: ${this.applicant.gender}`,
+        `Blood Type: ${this.applicant.bloodType}`,
+        `Marital Status: ${this.applicant.martialStatus}`,
+        
+        { text: 'Address', style: 'header' },
+        `Address Line: ${this.address.addressLine}`,
+        `Country: ${this.address.country}`,
+        `City: ${this.address.city}`,
+        `Zip Code: ${this.address.zipCode}`,
+        `Additional Code: ${this.address.additionalCode}`,
+        `Mobile Number: ${this.address.mobileNumber}`,
+        `Email: ${this.address.emailAddress}`,
+  
+        { text: 'National Identity', style: 'header' },
+        `ID: ${this.nationalIdentity.idNumber}`,
+        `Expiry Date: ${this.nationalIdentity.expiryDate}`,
+        `Place of Issue: ${this.nationalIdentity.placeOfIssue}`,
+        `Date of Birth: ${this.nationalIdentity.dateOfBirth}`,
+        `Place of Birth: ${this.nationalIdentity.placeOfBirth}`,
+  
+        { text: 'Dependencies', style: 'header' },
+        {
+          table: {
+            body: [
+              ['Name', 'Kinship', 'Date of Birth'],
+              ...this.dependencies.map(dep => [dep.name, dep.kinship, dep.dateOfBirth])
+            ]
+          }
+        },
+  
+        { text: 'Emergency Contacts', style: 'header' },
+        {
+          table: {
+            body: [
+              ['Name', 'Kinship', 'Phone Number'],
+              ...this.emergencyContacts.map(contact => [contact.name, contact.kinship, contact.phoneNumber])
+            ]
+          }
+        },
+      ],
+  
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 20, 0, 10]
+        }
+      }
+    };
+  
+    pdfMake.createPdf(docDefinition).download('ApplicantDetails.pdf');
+  }
+  
   logout(): void {
     this.keycloakService.logout('http://localhost:4200');  // Replace with your desired redirect URL after logout.
   }
