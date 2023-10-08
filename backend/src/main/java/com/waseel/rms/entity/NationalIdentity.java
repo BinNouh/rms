@@ -8,6 +8,7 @@ import lombok.Getter;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Getter
@@ -21,12 +22,14 @@ public class NationalIdentity {
     private String idNumber;
 
     @NotNull(message = "Expiry Date is required.")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date expiryDate;
 
     @NotBlank(message = "Place of Issue is required.")
     private String placeOfIssue;
 
     @NotNull(message = "Date of Birth is required.")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
 
     @NotBlank(message = "Place of Birth is required.")

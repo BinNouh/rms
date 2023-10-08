@@ -5,6 +5,7 @@ import { FormService } from '../form/form.service';
 import { KeycloakService } from 'keycloak-angular';
 import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 import { saveAs } from 'file-saver';
+import { LOGO_BASE64 } from './logo';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
@@ -140,64 +141,228 @@ export class ApplicantDetailsComponent implements OnInit {
     this.fileStatus.requestType = requestType;
     this.fileStatus.percent = Math.round(100 * loaded / total);
   }
+  
 
   // Print all fields in PDF
-
+  
   generatePDF() {
+
     let docDefinition: any = {
       content: [
-        { text: 'Personal Details', style: 'header' },
-        `Name: ${this.applicant.fullName}`,
-        `Nationality: ${this.applicant.nationality}`,
-        `Gender: ${this.applicant.gender}`,
-        `Blood Type: ${this.applicant.bloodType}`,
-        `Marital Status: ${this.applicant.martialStatus}`,
+        {
+          image: LOGO_BASE64,
+          width: 150,
+          alignment: 'left',
+          margin: [0, 20, 0, 20] 
+      },
+
+      {
+        text: '1) Personal information by (national ID / residence)',
+        style: 'sectionHeader',
+        margin: [0, 20, 0, 10]
+    },
+    {
+        text: `Name: ${this.applicant.fullName}`,
+        style: 'nameText',
+        margin: [0, 10, 0, 10]
+    },
+    {
+        columns: [
+            {
+                width: '*',
+                text: `Nationality: ${this.applicant.nationality}`,
+                style: 'infoText'
+            },
+            {
+                width: '*',
+                text: `Gender: ${this.applicant.gender}`,
+                style: 'infoText'
+            },
+            {
+                width: '*',
+                text: `Blood Type: ${this.applicant.bloodType}`,
+                style: 'infoText'
+            },
+            {
+                width: '*',
+                text: `Marital Status: ${this.applicant.martialStatus}`,
+                style: 'infoText'
+            }
+        ],
+        margin: [0, 5, 0, 15]
+
+
+        },
+
+        {
+          text: '2) Address',
+          style: 'sectionHeader',
+          margin: [0, 20, 0, 10]
+      },
         
-        { text: 'Address', style: 'header' },
-        `Address Line: ${this.address.addressLine}`,
-        `Country: ${this.address.country}`,
-        `City: ${this.address.city}`,
-        `Zip Code: ${this.address.zipCode}`,
-        `Additional Code: ${this.address.additionalCode}`,
-        `Mobile Number: ${this.address.mobileNumber}`,
-        `Email: ${this.address.emailAddress}`,
-  
-        { text: 'National Identity', style: 'header' },
-        `ID: ${this.nationalIdentity.idNumber}`,
-        `Expiry Date: ${this.nationalIdentity.expiryDate}`,
-        `Place of Issue: ${this.nationalIdentity.placeOfIssue}`,
-        `Date of Birth: ${this.nationalIdentity.dateOfBirth}`,
-        `Place of Birth: ${this.nationalIdentity.placeOfBirth}`,
-  
-        { text: 'Dependencies', style: 'header' },
-        {
-          table: {
-            body: [
-              ['Name', 'Kinship', 'Date of Birth'],
-              ...this.dependencies.map(dep => [dep.name, dep.kinship, dep.dateOfBirth])
-            ]
+      {
+        columns: [
+            {
+                width: '*',
+                text: `Address Line: ${this.address.addressLine}`,
+                style: 'infoText'
+            },
+            {
+                width: '*',
+                text: `Country: ${this.address.country}`,
+                style: 'infoText'
+            },
+            {
+                width: '*',
+                text: `City: ${this.address.city}`,
+                style: 'infoText'
+            },
+            {
+                width: '*',
+                text: `Zip Code: ${this.address.zipCode}`,
+                style: 'infoText'
+            },
+            {
+                width: '*',
+                text: `Additional Code: ${this.address.additionalCode}`,
+                style: 'infoText'
+            },
+        ],
+        
+    },
+    {
+      columns: [
+            {
+              width: '*',
+              text: `Mobile Number: ${this.address.mobileNumber}`,
+              style: 'infoText'
+          },
+          {
+            width: '*',
+            text: `Email: ${this.address.emailAddress}`,
+            style: 'infoText'
           }
+      ]
+    },
+
+    {
+      text: '3) National identity',
+      style: 'sectionHeader',
+      margin: [0, 20, 0, 10]
+    },
+
+    {
+      columns: [
+          {
+            width: '*',
+            text: `ID: ${this.nationalIdentity.idNumber}`,
+            style: 'infoText'
+           },
+           {
+          width: '*',
+          text: `Expiry Date: ${this.nationalIdentity.expiryDate}`,
+          style: 'infoText'
+           },
+          {
+              width: '*',
+              text: `Place of Issue: ${this.nationalIdentity.placeOfIssue}`,
+              style: 'infoText'
+          },
+      ],
+
+  },
+  {
+    columns: [
+      {
+        width: '*',
+        text: `Date of Birth: ${this.nationalIdentity.dateOfBirth}`,
+        style: 'infoText'
+    },
+    {
+        width: '*',
+        text: `Place of Birth: ${this.nationalIdentity.placeOfBirth}`,
+        style: 'infoText'
+    }
+    ]
+  },
+
+          {
+            text: '4) Dependencies',
+            style: 'sectionHeader',
+            margin: [0, 20, 0, 10]
+          },
+
+          {
+            table: {
+                widths: ['*', '*', '*'],
+                body: [
+                    ['Name', 'Kinship', 'Date of Birth'], 
+                    ...this.dependencies.map(dep => [dep.name, dep.kinship, dep.dateOfBirth])
+                ]
+            }
+        },
+
+        {
+          text: '5) Emergency Contacts',
+          style: 'sectionHeader',
+          margin: [0, 20, 0, 10]
         },
   
-        { text: 'Emergency Contacts', style: 'header' },
-        {
-          table: {
+    {
+        table: {
+            widths: ['*', '*', '*'],
             body: [
-              ['Name', 'Kinship', 'Phone Number'],
-              ...this.emergencyContacts.map(contact => [contact.name, contact.kinship, contact.phoneNumber])
+                ['Name', 'Kinship', 'Phone Number'], 
+                ...this.emergencyContacts.map(contact => [contact.name, contact.kinship, contact.phoneNumber])
             ]
-          }
-        },
+        }
+    },
       ],
   
+
       styles: {
-        header: {
-          fontSize: 18,
-          bold: true,
-          margin: [0, 20, 0, 10]
+        title: {
+            fontSize: 32,
+            bold: true,
+            color: '#084B8A'
+        },
+        sectionHeader: {
+            fontSize: 20,
+            bold: true,
+            decoration: 'underline',
+            color: '#084B8A',
+            margin: [0, 20, 0, 10]
+        },
+        nameText: {
+            fontSize: 16,
+            bold: true,
+            color: '#2A2A2A'
+        },
+        infoText: {
+            fontSize: 14,
+            color: '#333333',
+            italics: true
+        },
+        tableHeader: {
+            bold: true,
+            fontSize: 16,
+            color: 'white',
+            fillColor: '#084B8A',
+            margin: [5, 5, 5, 5]
+        },
+        columnText: {
+            fontSize: 14,
+            color: '#2A2A2A'
         }
-      }
-    };
+    },
+    defaultStyle: {
+        fontSize: 14,
+        bold: false,
+        color: '#333333',
+        alignment: 'left'
+    }
+};
+
   
     pdfMake.createPdf(docDefinition).download('ApplicantDetails.pdf');
   }
