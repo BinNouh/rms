@@ -1,0 +1,45 @@
+.container {
+    background-color: #ffffff;
+    max-width: 800px;
+    margin: 0px auto;
+    padding: 40px;
+    border-radius: 8px;
+    }
+    
+    .form-group {
+      margin-bottom: 0px;
+    }
+    
+    .card {
+      padding: 24px;
+      border: 1px solid #1f2993; /* Hex color added */
+      border-radius: 8px;
+      margin-bottom: 20px;
+      background-color: #f0f2f8;
+    }
+    .logo-container {
+      position: sticky;
+      text-align: center;
+      width: 50%;
+      margin-top: 3%;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .logo {
+      width: 80%;
+  
+    }
+  
+    @media (max-width:800px) {
+      
+      .logo-container {
+        width: 80%;
+        margin-top: 10%;
+  
+      }
+      .container {
+        padding: 0px;
+      }
+    }
+  
+    

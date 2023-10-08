@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offer Form</title>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #ffffff;
+        color: #333;
+      }
+
+      .error {
+        color: red;
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #1f2993; /* Hex color added */
+      }
+
+      input[type="text"],
+      input[type="date"],
+      input[type="email"],
+      input[type="file"],
+      select,
+      input[type="checkbox"] {
+        width: 90%;
+        padding: 12px;
+        margin-top: 4px;
+        border: 1px solid #1f2993; /* Hex color added */
+        border-radius: 4px;
+      }
+
+      input[type="checkbox"] {
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        background-color: #fff;
+        border: 1px solid #1f2993;
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+      }
+
+      input[type="checkbox"]:checked {
+        background-color: #1f2993;
+      }
+
+      input[type="checkbox"]:checked::after {
+        content: "\2713";
+        font-size: 18px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+      }
+
+      h2 {
+        font-size: 1.8em;
+        margin-bottom: 16px;
+        color: #1f2993; /* Hex color added */
+      }
+
+      button {
+        background-color: #1f2993; /* Hex color added */
+        color: #fff;
+        padding: 12px 24px;
+        margin: 0px 0px 0px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      }
+
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      .flex-button-container {
+        display: flex;
+        justify-content: flex-end;        /*gap: 20px; /* This will add space between the buttons */
+        margin: 20px 20px;
+        padding: 0px 25px; /* Optional: add some top margin */
+      }
+
+      .material-icons {
+        margin-right: 8px;
+      }
+
+      .required {
+        color: red;
+      }
+
+      
+    </style>
+    </head>
+    <body>
+      <div class="logo-container">
+        <img
+          src="https://waseel.s3.amazonaws.com/Waseel+New+logo.png"
+          alt="Waseel Logo"
+          class="logo"
+        />
+      </div>
+      <div class="container" >
+       <form   enctype="multipart/form-data">
+         <div class="card">
+         <h2>Attachments</h2>
+         <div class="form-group">
+            <label for="nationalId">National ID:<span class="required"> *</span></label>
+              <input
+                type="file"
+                name="attachments"
+                id="nationalId"
+                
+                accept=".pdf,.jpg,.png,.jpeg"
+                required
+               />
+           </div>
+           <div class="form-group">
+            <label for="paySlip">Pay slip:<span class="required"> *</span></label>
+              <input
+                type="file"
+                name="attachments"
+                id="paySlip"
+                
+                accept=".pdf,.jpg,.png,.jpeg"
+                required
+               />
+           </div>
+           <div class="form-group">
+            <label for="educationCertification">Education Certification:<span class="required"> *</span></label>
+              <input
+                type="file"
+                name="attachments"
+                id="educationCertification"
+                
+                accept=".pdf,.jpg,.png,.jpeg"
+                required
+               />
+           </div>
+           <button
+           type="submit"
+         >
+           Submit
+         </button>
+         </div>
+      </form>
+    </div>
+  </body>
+</html>
